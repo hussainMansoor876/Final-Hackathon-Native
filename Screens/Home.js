@@ -2,7 +2,7 @@ import React from 'react';
 import { FloatingAction } from 'react-native-floating-action'
 import { StyleSheet, Text, View, Platform, Alert } from 'react-native';
 import { DrawerActions } from 'react-navigation-drawer';
-import { Header, Button, Input } from 'react-native-elements';
+import { Header, Button } from 'react-native-elements';
 import { Constants, Location, Permissions } from 'expo';
 import { removeUser } from '../Redux/actions/authActions'
 import { connect } from 'react-redux';
@@ -79,9 +79,6 @@ class Home extends React.Component {
             centerComponent={{ text: 'Mansoor Hussain Service App', style: { color: '#fff' } }}
             rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
           />
-        <Input
-          placeholder='BASIC INPUT'
-        />
         <FloatingAction
           actions={actions}
           onPressItem={

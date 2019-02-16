@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, Alert, TextInput,Text } from 'react-native';
-import { Facebook, Google } from 'expo'
-import { Button, Header } from 'react-native-elements';
+import { StyleSheet, View, Alert, TextInput,Text, Image } from 'react-native';
+import { Facebook, Google, ImagePicker } from 'expo'
+import { Button, Header, Input, FormLabel, FormInput } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { updateUser, newUser } from '../Redux/actions/authActions'
 import { connect } from 'react-redux'
@@ -20,6 +20,10 @@ const firebaseSecretId = '2eL7fBh-WSRcCBjJPTcnDDz_'
 class Login extends React.Component {
   constructor(props){
     super(props)
+    this.state = {
+      imageName: null,
+      image: null
+    }
   }
 
   componentDidMount(){
@@ -40,25 +44,25 @@ class Login extends React.Component {
         } = await Facebook.logInWithReadPermissionsAsync('787190688316212', {
           permissions: ['groups_access_member_info'],
         });
-        console.log('this',this.props)
         if (type === 'success') {
           // Get the user's name using Facebook's Graph API
           const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
           const user = await response.json()
-          // Alert.alert('Logged in!', `Hi ${data.name}!`);
           axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
           .then((response) => {
             console.log('response',response.data);
             const { data } = response
             if(!data.length){
               this.props.newUser(true)
+              this.props.updateUser(user)
+            }
+            else{
+              this.props.updateUser(user)
             }
           })
           .catch(function (error) {
             console.log('error',error);
-          });
-          this.props.updateUser(user)      
-          console.log('data***',user)
+          });             
         } else {
           // type === 'cancel'
         }
@@ -74,19 +78,71 @@ class Login extends React.Component {
         const { type, accessToken, user } = await Google.logInAsync({ clientId })
         console.log('user***',user);        
         if (type === 'success') {
-          /* `accessToken` is now valid and can be used to get data from the Google API with HTTP requests */
-          console.log('user***',user);
-          // Alert.alert('Logged in!', `Hi ${user.email}!`);
-          this.props.updateUser(user)
+          axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
+          .then((response) => {
+            console.log('response',response.data);
+            const { data } = response
+            if(!data.length){
+              this.props.newUser(true)
+              this.props.updateUser(user)
+            }
+            else{
+              this.props.updateUser(user)
+            }
+          })
+          .catch(function (error) {
+            console.log('error',error);
+          });
         }
       }
 
+      async pickImage(){
+        console.log("hello")
+        let result = await ImagePicker.launchImageLibraryAsync({
+          allowsEditing: true,
+          aspect: [4, 3],
+        })
+        console.log('Result***',result)
+    
+        if (!result.cancelled) {
+          this.uploadImage(result.uri,"mansoor")
+            .then((res) => {
+              console.log("Success***")
+              console.log("Res***",res)
+              this.setState({ image: res, imageName: result.uri });
+            })
+            .catch(error => {
+              console.log("Error==>",error)
+            })
+        }
+      };
+      
+
+      uploadImage = async (uri,imageName) => {
+        const blob = await new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.onload = function() {
+            resolve(xhr.response);
+          };
+          xhr.onerror = function(e) {
+            console.log(e);
+            reject(new TypeError('Network request failed'));
+          };
+          xhr.responseType = 'blob';
+          xhr.open('GET', uri, true);
+          xhr.send(null);
+        })
+        return await blob;
+      }
+      
+
   render() {
     const { user } = this.props
-    console.log('props+',this.props)
+    const { imageName, image } = this.state
+    console.log('this',this.state)
     return (
       <View style={styles.container}>
-      { user ? <Navigator />
+      {/* { user ? <Navigator />
        :
       <View>
         <View style={{marginTop: 150, marginBottom: 2, marginLeft: 1, marginRight: 1}}>
@@ -118,7 +174,29 @@ class Login extends React.Component {
           />
         </View>
           <Text>Wellcome to Mansoor Hussain Hospital Token App</Text>
-      </View>}
+      </View>} */}
+      <Input
+          placeholder='BASIC INPUT'
+        />
+        <Input
+        placeholder='INPUT WITH ICON'
+        leftIcon={{ type: 'font-awesome', name: 'chevron-left' }}
+      />
+
+      <Input
+        placeholder='INPUT WITH CUSTOM ICON'
+        leftIcon={
+          <Icon
+            name='user'
+            size={24}
+            color='black'
+          />
+        }
+      />
+      <Button
+            title={!imageName ? "Pick Image" : imageName.slice(imageName.length - 20,imageName.length)}
+            onPress={() => this.pickImage()}
+          />
       </View>
     );
   }
