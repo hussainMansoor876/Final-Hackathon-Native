@@ -3,6 +3,9 @@ const reducer = (state = {}, action) =>{
         case "UPDATE_USER": {
             return {...state,user: action.user}
         }
+        case "NEW_USER": {
+            return {...state,new: action.new}
+        }
         case "REMOVE_USER": {
             return {...state, user: null}
         }

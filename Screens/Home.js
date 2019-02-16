@@ -2,11 +2,11 @@ import React from 'react';
 import { FloatingAction } from 'react-native-floating-action'
 import { StyleSheet, Text, View, Platform, Alert } from 'react-native';
 import { DrawerActions } from 'react-navigation-drawer';
-import { Header, Button } from 'react-native-elements';
+import { Header, Button, Input } from 'react-native-elements';
 import { Constants, Location, Permissions } from 'expo';
 import { removeUser } from '../Redux/actions/authActions'
 import { connect } from 'react-redux';
-import axios from 'axios'
+import axios from 'axios';
 
 class Home extends React.Component {
   constructor(props){
@@ -17,26 +17,19 @@ class Home extends React.Component {
     }
   }
 
-  componentDidMount(){
+  componentWillMount(){
     const { user } = this.props
-    axios.post('https://final-hackathon.herokuapp.com/user/register', {
-      user
-    })
-    .then(function (response) {
-      console.log('response',response);
-    })
-    .catch(function (error) {
-      console.log('error',error);
-    });
-    // fetch('https://final-hackathon.herokuapp.com/user/register',{
-    //   method: 'POST',
-    //   headers:{
-    //   "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify({user})
-    //   })
-    //   .then((res) => res.json())
-    //   .then((result) => console.log(result))
+    // axios.post('https://final-hackathon.herokuapp.com/user/register', {
+    //   name: user.name,
+    //   email: user.email,
+    //   loginId: user.id
+    // })
+    // .then(function (response) {
+    //   console.log('response',response);
+    // })
+    // .catch(function (error) {
+    //   console.log('error',error);
+    // });
     if (Platform.OS === 'android' && !Constants.isDevice) {
       this.setState({
         errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
@@ -86,10 +79,9 @@ class Home extends React.Component {
             centerComponent={{ text: 'Mansoor Hussain Service App', style: { color: '#fff' } }}
             rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
           />
-        {/* <Button
-        title= "Click Here"
-        onPress={() =>this.props.navigation.dispatch(DrawerActions.openDrawer())}
-         /> */}
+        <Input
+          placeholder='BASIC INPUT'
+        />
         <FloatingAction
           actions={actions}
           onPressItem={

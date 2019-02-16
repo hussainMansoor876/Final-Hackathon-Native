@@ -4,6 +4,14 @@ const updateUser = (user) => {
         user
     }
 }
+
+const newUser = (bool) => {
+    return {
+        type: "NEW_USER",
+        new: bool
+    }
+}
+
 const removeUser = () => {
     return {
         type: "REMOVE_USER"
@@ -12,5 +20,6 @@ const removeUser = () => {
 
 export {
     updateUser,
+    newUser,
     removeUser
 }

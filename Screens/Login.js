@@ -3,8 +3,9 @@ import { StyleSheet, View, Alert, TextInput,Text } from 'react-native';
 import { Facebook, Google } from 'expo'
 import { Button, Header } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { updateUser,removeUser } from '../Redux/actions/authActions'
+import { updateUser, newUser } from '../Redux/actions/authActions'
 import { connect } from 'react-redux'
+import axios from 'axios';
 import Navigator from '../navigation/AppNavigator'
 
 import firebase from '../Config/firebase'
@@ -22,12 +23,13 @@ class Login extends React.Component {
   }
 
   componentDidMount(){
-    console.log("props***",this.props)
+    console.log("props***",this.props.new)
+    this.props.newUser(false)
     // this.props.updateUser({name: 'mansoor'})
     // console.log("props***",this.props)    
   }
 
-  async logIn() {
+  async logIn(){
       try {
         const {
           type,
@@ -38,13 +40,25 @@ class Login extends React.Component {
         } = await Facebook.logInWithReadPermissionsAsync('787190688316212', {
           permissions: ['groups_access_member_info'],
         });
+        console.log('this',this.props)
         if (type === 'success') {
           // Get the user's name using Facebook's Graph API
           const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-          const data = await response.json()
-          Alert.alert('Logged in!', `Hi ${data.name}!`);
-          this.props.updateUser(data)      
-          console.log('data***',data)
+          const user = await response.json()
+          // Alert.alert('Logged in!', `Hi ${data.name}!`);
+          axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
+          .then((response) => {
+            console.log('response',response.data);
+            const { data } = response
+            if(!data.length){
+              this.props.newUser(true)
+            }
+          })
+          .catch(function (error) {
+            console.log('error',error);
+          });
+          this.props.updateUser(user)      
+          console.log('data***',user)
         } else {
           // type === 'cancel'
         }
@@ -53,25 +67,7 @@ class Login extends React.Component {
       }
     }
 
-      loginFirebase(){
-        firebase.auth().signInWithPopup(providerGoogle).then(function(result) {
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          var token = result.credential.accessToken;
-          // The signed-in user info.
-          var user = result.user;
-          console.log('user***'+user)
-          // ...
-        }).catch(function(error) {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // The email of the user's account used.
-          var email = error.email;
-          // The firebase.auth.AuthCredential type that was used.
-          var credential = error.credential;
-          // ...
-        });
-      }
+     
 
       async googleLogin(){
         const clientId  = '777635686273-80tsm7h4k70oue449p34ontp0o86q1e5.apps.googleusercontent.com'
@@ -87,6 +83,7 @@ class Login extends React.Component {
 
   render() {
     const { user } = this.props
+    console.log('props+',this.props)
     return (
       <View style={styles.container}>
       { user ? <Navigator />
@@ -140,14 +137,15 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   console.log("mapToState",state.authReducer)
   return {
-    user: state.authReducer.user
+    user: state.authReducer.user,
+    new: state.authReducer.new
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     updateUser: (user) => dispatch(updateUser(user)),
-    removeUser: () => dispatch(removeUser())
+    newUser: (bool) => dispatch(newUser(bool))
   }
 }
 
