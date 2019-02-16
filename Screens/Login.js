@@ -120,12 +120,6 @@ class Login extends React.Component {
           title="Login with Facebook"
           />
         </View>
-        <View style={{marginTop: 5, marginBottom: 2, marginLeft: 1, marginRight: 1}}>
-        <Button
-          onPress = {() => this.props.removeUser()}
-          title="Remove User"
-          />
-        </View>
           <Text>Wellcome to Mansoor Hussain Hospital Token App</Text>
       </View>}
       </View>
