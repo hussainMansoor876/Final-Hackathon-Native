@@ -6,24 +6,37 @@ import { Header, Button } from 'react-native-elements';
 import { Constants, Location, Permissions } from 'expo';
 import { removeUser } from '../Redux/actions/authActions'
 import { connect } from 'react-redux';
+import axios from 'axios'
 
 class Home extends React.Component {
   constructor(props){
     super(props);
-    console.log('props***',this.props)
+    console.log('user***',this.props.user)
     this.state = {
       errorMessage: ''
     }
   }
 
   componentDidMount(){
-    // navigator.geolocation.getCurrentPosition(position => {
-    //   console.log('position',position.coords)
-    //   this.setState({
-    //     latitude: position.coords.latitude,
-    //     longitude: position.coords.longitude
+    const { user } = this.props
+    axios.post('https://final-hackathon.herokuapp.com/user/register', {
+      user
+    })
+    .then(function (response) {
+      console.log('response',response);
+    })
+    .catch(function (error) {
+      console.log('error',error);
+    });
+    // fetch('https://final-hackathon.herokuapp.com/user/register',{
+    //   method: 'POST',
+    //   headers:{
+    //   "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify({user})
     //   })
-    // })
+    //   .then((res) => res.json())
+    //   .then((result) => console.log(result))
     if (Platform.OS === 'android' && !Constants.isDevice) {
       this.setState({
         errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
