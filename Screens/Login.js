@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Alert, TextInput,Text, Image } from 'react-native';
+import { StyleSheet, View, Alert, TextInput,Text, Image, Keyboard } from 'react-native';
 import { Facebook, Google, ImagePicker } from 'expo'
 import { Button, Header, Input, FormLabel, FormInput } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -22,7 +22,10 @@ class Login extends React.Component {
     super(props)
     this.state = {
       imageName: null,
-      image: null
+      image: null,
+      phone: '',
+      new1: props.new,
+      user: props.user
     }
   }
 
@@ -100,7 +103,7 @@ class Login extends React.Component {
         console.log("hello")
         let result = await ImagePicker.launchImageLibraryAsync({
           allowsEditing: true,
-          aspect: [4, 3],
+          aspect: [5, 6],
         })
         console.log('Result***',result)
     
@@ -134,17 +137,50 @@ class Login extends React.Component {
         })
         return await blob;
       }
+
+      phoneNumber(text){
+        if(text >= 0){
+          this.setState({phone: text})
+        }
+      }
+
+      async submit(){
+        const { phone, image, imageName } = this.state
+        const { user } = this.props
+        if (!phone && !image){
+          Alert.alert("bhai pehly select to kro")
+        }
+        else{
+         var storageRef = firebase.storage().ref(`${user.id}/${imageName}`)
+         var snapShot = await storageRef.put(image)
+         var remoteUri = await snapShot.ref.getDownloadURL()
+         console.log('remoteUri',remoteUri)
+        }
+        
+        // axios.post('/user', {
+        //   firstName: 'Fred',
+        //   lastName: 'Flintstone'
+        // })
+        // .then((response) => {
+        //   console.log(response);
+        // })
+        // .catch((error) => {
+        //   Alert.alert(error);
+        // });
+      }
       
 
   render() {
     const { user } = this.props
-    const { imageName, image } = this.state
+    const { imageName, image, phone, new1 } = this.state
     console.log('this',this.state)
     return (
       <View style={styles.container}>
-      {/* { user ? <Navigator />
+      { user && !this.props.new ? <Navigator />
        :
       <View>
+        {!user && !this.props.new &&
+        <View>
         <View style={{marginTop: 150, marginBottom: 2, marginLeft: 1, marginRight: 1}}>
         <Button
           icon={
@@ -173,30 +209,35 @@ class Login extends React.Component {
           title="Login with Facebook"
           />
         </View>
-          <Text>Wellcome to Mansoor Hussain Hospital Token App</Text>
-      </View>} */}
+          <Text>Wellcome to Mansoor Hussain Service App</Text>
+          </View>}
+      </View>}
+      {this.props.new && user && <View style={{marginTop: 80}}>      
+      <View style={{marginBottom: 20}}>
       <Input
-          placeholder='BASIC INPUT'
-        />
-        <Input
-        placeholder='INPUT WITH ICON'
-        leftIcon={{ type: 'font-awesome', name: 'chevron-left' }}
-      />
-
-      <Input
-        placeholder='INPUT WITH CUSTOM ICON'
+        placeholder='INPUT your phone number'
         leftIcon={
           <Icon
-            name='user'
+            name='phone-square'
             size={24}
             color='black'
           />
         }
+        value={phone}
+        onChangeText = {(text) => this.phoneNumber(text)}
       />
+      </View>
       <Button
             title={!imageName ? "Pick Image" : imageName.slice(imageName.length - 20,imageName.length)}
             onPress={() => this.pickImage()}
           />
+      <View style={{marginTop: 10}}>
+          <Button
+            title="Submit"
+            onPress={() => this.submit()}
+          />
+          </View>
+      </View>}
       </View>
     );
   }
