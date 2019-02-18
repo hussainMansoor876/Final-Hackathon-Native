@@ -8,8 +8,8 @@ const StackNavigator = createStackNavigator({
     Login: {
         screen: Screen.LoginScreen
     },
-    Company: {
-        screen: Screen.CompanyScreen
+    Services: {
+        screen: Screen.Services
     },
     CreateCompany: {
         screen: Screen.CreateCompanyScreen
@@ -28,7 +28,7 @@ const TabNavigator = createMaterialTopTabNavigator({
         screen: Screen.LoginScreen
     },
     Company: {
-        screen: Screen.CompanyScreen
+        screen: Screen.Services
     },
     CreateCompany: {
         screen: Screen.CreateCompanyScreen
@@ -39,8 +39,8 @@ const DrawerNavigator = createDrawerNavigator({
     Home: {
         screen: Screen.HomeScreen
     },
-    Company: {
-        screen: Screen.CompanyScreen
+    Services: {
+        screen: Screen.Services
     },
     CreateCompany: {
         screen: Screen.CreateCompanyScreen
@@ -55,7 +55,7 @@ const BottomNavigator = createBottomTabNavigator({
         screen: Screen.HomeScreen
     },
     Company: {
-        screen: Screen.CompanyScreen
+        screen: Screen.Services
     },
     CreateCompany: {
         screen: Screen.CreateCompanyScreen
@@ -67,7 +67,7 @@ const SwitchNavigator = createSwitchNavigator({
         screen: Screen.HomeScreen
     },
     Company: {
-        screen: Screen.CompanyScreen
+        screen: Screen.Services
     },
     CreateCompany: {
         screen: Screen.CreateCompanyScreen

@@ -25,15 +25,13 @@ class Login extends React.Component {
       image: null,
       phone: '',
       new1: props.new,
-      user: props.user
+      user: props.user,
+      avator: ''
     }
   }
 
   componentDidMount(){
-    console.log("props***",this.props.new)
     this.props.newUser(false)
-    // this.props.updateUser({name: 'mansoor'})
-    // console.log("props***",this.props)    
   }
 
   async logIn(){
@@ -53,7 +51,6 @@ class Login extends React.Component {
           const user = await response.json()
           axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
           .then((response) => {
-            console.log('response',response.data);
             const { data } = response
             if(!data.length){
               this.props.newUser(true)
@@ -79,11 +76,9 @@ class Login extends React.Component {
       async googleLogin(){
         const clientId  = '777635686273-80tsm7h4k70oue449p34ontp0o86q1e5.apps.googleusercontent.com'
         const { type, accessToken, user } = await Google.logInAsync({ clientId })
-        console.log('user***',user);        
         if (type === 'success') {
           axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
           .then((response) => {
-            console.log('response',response.data);
             const { data } = response
             if(!data.length){
               this.props.newUser(true)
@@ -100,18 +95,15 @@ class Login extends React.Component {
       }
 
       async pickImage(){
-        console.log("hello")
+        const { user } = this.state
         let result = await ImagePicker.launchImageLibraryAsync({
           allowsEditing: true,
           aspect: [5, 6],
         })
-        console.log('Result***',result)
     
         if (!result.cancelled) {
           this.uploadImage(result.uri,"mansoor")
             .then((res) => {
-              console.log("Success***")
-              console.log("Res***",res)
               this.setState({ image: res, imageName: result.uri });
             })
             .catch(error => {
@@ -122,6 +114,7 @@ class Login extends React.Component {
       
 
       uploadImage = async (uri,imageName) => {
+        const { user } = this.state
         const blob = await new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest();
           xhr.onload = function() {
@@ -135,6 +128,10 @@ class Login extends React.Component {
           xhr.open('GET', uri, true);
           xhr.send(null);
         })
+        const storageRef = firebase.storage().ref(`${user.id}/${uri}`);
+        const snapShot = await storageRef.put(blob)
+        const remoteUri = await snapShot.ref.getDownloadURL()
+        this.setState({avator: remoteUri})
         return await blob;
       }
 
@@ -145,35 +142,33 @@ class Login extends React.Component {
       }
 
       async submit(){
-        const { phone, image, imageName } = this.state
-        const { user } = this.props
+        const { phone, image, imageName, avator, user } = this.state
         if (!phone && !image){
           Alert.alert("bhai pehly select to kro")
         }
         else{
-         var storageRef = firebase.storage().ref(`${user.id}/${imageName}`)
-         var snapShot = await storageRef.put(image)
-         var remoteUri = await snapShot.ref.getDownloadURL()
-         console.log('remoteUri',remoteUri)
+            axios.post('https://final-hackathon.herokuapp.com/user/post', {
+              name: this.state.user.name,
+              email: this.state.user.email,
+              loginId: this.state.user.id,
+              avator: this.state.avator,
+              phone: this.state.phone
+            })
+            .then((response) => {
+              console.log(response)
+              this.props.newUser(false)
+              // Alert.alert(response.message);
+            })
+            .catch((error) => {
+              Alert.alert(error);
+            });
         }
-        
-        // axios.post('/user', {
-        //   firstName: 'Fred',
-        //   lastName: 'Flintstone'
-        // })
-        // .then((response) => {
-        //   console.log(response);
-        // })
-        // .catch((error) => {
-        //   Alert.alert(error);
-        // });
       }
       
 
   render() {
     const { user } = this.props
     const { imageName, image, phone, new1 } = this.state
-    console.log('this',this.state)
     return (
       <View style={styles.container}>
       { user && !this.props.new ? <Navigator />

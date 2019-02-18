@@ -1,8 +1,10 @@
 import React from 'react';
 import { FloatingAction } from 'react-native-floating-action'
 import { StyleSheet, Text, View, Button } from 'react-native';
+import { connect } from 'react-redux';
+import { updateUser, newUser } from '../Redux/actions/authActions'
 
-export default class Company extends React.Component {
+class Services extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -55,3 +57,14 @@ const actions = [ {
     name: 'bt_videocam',
     position: 2
   }];
+
+const mapStateToProps = (state) => {
+  console.log("mapToState",state.authReducer)
+  return {
+    user: state.authReducer.user
+  }
+}
+
+
+
+export default connect(mapStateToProps)(Services)
