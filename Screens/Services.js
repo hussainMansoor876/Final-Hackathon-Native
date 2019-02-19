@@ -11,9 +11,46 @@ class Services extends React.Component {
     super(props);
     this.state = {
       visible: true,
-      checked: true
+      checked: true,
+      services: [
+        {
+          name: 'electrication',
+          type: false
+        },
+        {
+          name: 'mechanic',
+          type: false
+        },
+        {
+          name: 'plumber',
+          type: false
+        },
+        {
+          name: 'bike mechanic',
+          type: false
+        },
+        {
+          name: 'car mechanic',
+          type: false
+        },
+        {
+          name: 'motor mechanic',
+          type: false
+        },
+        {
+          name: 'machine',
+          type: false
+        }
+      ]
     }
     console.log('props***',props)
+  }
+
+  changeService(key,val){
+    let servicesCopy = this.state.services
+    console.log(servicesCopy[key])
+    servicesCopy[key].type = !servicesCopy[key].type
+    this.setState({services: servicesCopy})
   }
 
   changeVisibility(){
@@ -24,10 +61,10 @@ class Services extends React.Component {
   }
 
   render() {
-    const { visible } = this.state
+    const { visible, services } = this.state
     const { user } = this.props
     return (
-        <View style={styles.container}>
+        <View style={{flex: 1}}>
         <Header
         placement="left"
         leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
@@ -35,41 +72,14 @@ class Services extends React.Component {
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
         <View style={styles.container}>
-        <View style={{flex: 1, flexDirection: 'row'}}>
-        <View style={{flex: 3}}>
-        <CheckBox
-          title='Click Here'
-          checked={this.state.checked}
+        {services.map((val,key)=>{
+          return <CheckBox
+          key={key}
+          title={val.name.toLocaleUpperCase()}
+          checked={val.type}
+          onPress={()=> this.changeService(key,val)}          
         />
-        </View>
-        <View style={{flex: 2}}>
-        <CheckBox
-          center
-          title='Click Here'
-          checked={this.state.checked}
-        />
-        </View>
-        </View> 
-        <View style={styles.container}>       
-        <CheckBox
-          center
-          title='Click Here'
-          checkedIcon='dot-circle-o'
-          uncheckedIcon='circle-o'
-          checked={this.state.checked}
-        />
-
-        <CheckBox
-          center
-          title='Click Here to Remove This Item'
-          iconRight
-          iconType='material'
-          checkedIcon='clear'
-          uncheckedIcon='add'
-          checkedColor='red'
-          checked={this.state.checked}
-        />
-        </View> 
+        })}
         </View>
       </View>
     );
