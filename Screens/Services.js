@@ -1,8 +1,10 @@
 import React from 'react';
 import { FloatingAction } from 'react-native-floating-action'
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { Header, Button } from 'react-native-elements';
+import { updateUser, removeUser } from '../Redux/actions/authActions'
+import { DrawerActions } from 'react-navigation-drawer';
 import { connect } from 'react-redux';
-import { updateUser, newUser } from '../Redux/actions/authActions'
 
 class Services extends React.Component {
   constructor(props){
@@ -22,11 +24,15 @@ class Services extends React.Component {
 
   render() {
     const { visible } = this.state
+    const { user } = this.props
     return (
         <View style={styles.container}>
-        <Text style={styles.example}>
-          Floating Action Main
-        </Text>
+        <Header
+        placement="left"
+        leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
+        centerComponent={{ text: `Wellcome ${user.name}`, style: { color: '#fff' } }}
+        rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
+        />
         <FloatingAction
           // actions={actions}
           onPressMain={ () => this.props.navigation.navigate('CreateCompany')}
@@ -65,6 +71,12 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateUser: (user) => dispatch(updateUser(user)),
+    removeUser: () => dispatch(removeUser())
+  }
+}
 
 
 export default connect(mapStateToProps)(Services)
