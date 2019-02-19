@@ -62,11 +62,6 @@ class Services extends React.Component {
           checkedColor='red'
           checked={this.state.checked}
         />
-        <FloatingAction
-          // actions={actions}
-          onPressMain={ () => this.props.navigation.navigate('CreateCompany')}
-          showBackground= {false}
-        />
       </View>
     );
   }
@@ -81,17 +76,6 @@ const styles = StyleSheet.create({
     },
   });
 
-const actions = [ {
-    text: 'Location',
-    icon: require('../Images/location.png'),
-    name: 'bt_room',
-    position: 1
-  }, {
-    text: 'Video',
-    icon: require('../Images/Video.png'),
-    name: 'bt_videocam',
-    position: 2
-  }];
 
 const mapStateToProps = (state) => {
   console.log("mapToState",state.authReducer)
