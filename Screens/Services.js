@@ -10,7 +10,8 @@ class Services extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      visible: true
+      visible: true,
+      checked: true
     }
     console.log('props***',props)
   }
@@ -26,24 +27,30 @@ class Services extends React.Component {
     const { visible } = this.state
     const { user } = this.props
     return (
-        <View>
+        <View style={styles.container}>
         <Header
         placement="left"
         leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
         centerComponent={{ text: `Wellcome ${user.name}`, style: { color: '#fff' } }}
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
+        <View style={styles.container}>
+        <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={{flex: 3}}>
         <CheckBox
           title='Click Here'
           checked={this.state.checked}
         />
-
+        </View>
+        <View style={{flex: 2}}>
         <CheckBox
           center
           title='Click Here'
           checked={this.state.checked}
         />
-
+        </View>
+        </View> 
+        <View style={styles.container}>       
         <CheckBox
           center
           title='Click Here'
@@ -62,6 +69,8 @@ class Services extends React.Component {
           checkedColor='red'
           checked={this.state.checked}
         />
+        </View> 
+        </View>
       </View>
     );
   }
@@ -71,8 +80,6 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
     },
   });
 
