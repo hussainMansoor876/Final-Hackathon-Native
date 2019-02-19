@@ -60,6 +60,10 @@ class Services extends React.Component {
     })
   }
 
+  updateServices(){
+    
+  }
+
   render() {
     const { visible, services } = this.state
     const { user } = this.props
@@ -80,6 +84,10 @@ class Services extends React.Component {
           onPress={()=> this.changeService(key,val)}          
         />
         })}
+        <Button
+            title="UPDATE SERVICES  "
+            onPress={() => this.updateServices()}
+          />
         </View>
       </View>
     );
