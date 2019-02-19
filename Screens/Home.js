@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Platform, Alert } from 'react-native';
 import { DrawerActions } from 'react-navigation-drawer';
 import { Header, Button } from 'react-native-elements';
 import { Constants, Location, Permissions } from 'expo';
-import { removeUser } from '../Redux/actions/authActions'
+import { updateUser, removeUser } from '../Redux/actions/authActions'
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -12,44 +12,21 @@ class Home extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      errorMessage: ''
     }
   }
 
   componentWillMount(){
     const { user } = this.props
     axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
-    .then(function (response) {
-      console.log('response',response);
+    .then((response) => {
+      console.log('response',response.data[0]);
+      this.props.updateUser(response.data[0])
     })
     .catch(function (error) {
       console.log('error',error);
     });
-    if (Platform.OS === 'android' && !Constants.isDevice) {
-      this.setState({
-        errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
-      });
-    } else {
-      this._getLocationAsync();
-    }
   }
 
-  _getLocationAsync = async () => {
-    let { status } = await Permissions.askAsync(Permissions.LOCATION)
-    // const check = await Location.getProviderStatusAsync()
-    // console.log('check',check.gpsAvailable)
-    // if(!check.gpsAvailable){
-    //   Alert.alert("Please Enable GPS")
-    // }
-    if (status !== 'granted') {
-      this.setState({
-        errorMessage: 'Permission to access location was denied',
-      });
-    }
-
-    let location = await Location.getCurrentPositionAsync({});
-    this.setState({ location });
-  };
 
   checkUser(name){
     name == "Hospital" && this.props.navigation.navigate('Company')
@@ -57,13 +34,13 @@ class Home extends React.Component {
 
   render() {
     const { user } = this.props
-    console.log('state***',this.state)   
+    // console.log('state***',this.state)   
     return (
         <View style={styles.container}>
         <Header
             placement="left"
             leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
-            centerComponent={{ text: 'Mansoor Hussain Service App', style: { color: '#fff' } }}
+            centerComponent={{ text: `Wellcome ${user.name}`, style: { color: '#fff' } }}
             rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
           />
         <FloatingAction
@@ -110,6 +87,7 @@ const actions = [ {
   
   const mapDispatchToProps = (dispatch) => {
     return {
+      updateUser: (user) => dispatch(updateUser(user)),
       removeUser: () => dispatch(removeUser())
     }
   }

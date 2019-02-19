@@ -65,7 +65,7 @@ class Login extends React.Component {
     }
 
     let location = await Location.getCurrentPositionAsync({});
-    console.log('loc',location)
+    // console.log('loc',location)
     this.setState({ lat: location.coords.latitude, lng: location.coords.longitude });
   };
 
@@ -178,7 +178,7 @@ class Login extends React.Component {
 
       async submit(){
         const { phone, image, imageName, avator, user, lat, lng } = this.state
-        console.log('state',this.state)
+        // console.log('state',this.state)
             axios.post('https://final-hackathon.herokuapp.com/user/post', {
               name: user.name,
               email: user.email,
@@ -199,7 +199,7 @@ class Login extends React.Component {
       
 
   render() {
-    console.log('this',this.state)
+    // console.log('this',this.state)
     const { user } = this.props
     const { imageName, image, phone, new1, phoneCheck } = this.state
     return (
