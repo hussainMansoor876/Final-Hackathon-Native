@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, Alert, TextInput,Text, Image, Keyboard } from 'react-native';
-import { Facebook, Google, ImagePicker } from 'expo'
+import { StyleSheet, View, Alert, TextInput,Text, Image, Keyboard, Platform } from 'react-native';
+import { Facebook, Google, ImagePicker, Constants, Location, Permissions } from 'expo'
 import { Button, Header, Input, FormLabel, FormInput } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { updateUser, newUser } from '../Redux/actions/authActions'
@@ -26,13 +26,48 @@ class Login extends React.Component {
       phone: '',
       new1: props.new,
       user: props.user,
-      avator: ''
+      avator: '',
+      errorMessage: '',
+      phoneCheck: false,
+      lat: '',
+      lng: ''
     }
   }
 
   componentDidMount(){
     this.props.newUser(false)
+    // navigator.geolocation.getCurrentPosition(position => {
+    //   this.setState({
+    //     lat : position.coords.latitude,
+    //     lng : position.coords.longitude
+    //   })
+    // })
+    if (Platform.OS === 'android' && !Constants.isDevice) {
+      this.setState({
+        errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
+      });
+    } else {
+      this._getLocationAsync();
+    }
   }
+
+  _getLocationAsync = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION)
+    // const check = await Location.getProviderStatusAsync()
+    // console.log('check',check.gpsAvailable)
+    // if(!check.gpsAvailable){
+    //   Alert.alert("Please Enable GPS")
+    // }
+    if (status !== 'granted') {
+      this.setState({
+        errorMessage: 'Permission to access location was denied',
+      });
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    console.log('loc',location)
+    this.setState({ lat: location.coords.latitude, lng: location.coords.longitude });
+  };
 
   async logIn(){
       try {
@@ -137,38 +172,36 @@ class Login extends React.Component {
 
       phoneNumber(text){
         if(text >= 0){
-          this.setState({phone: text})
+          this.setState({phone: text, phoneCheck: true})
         }
       }
 
       async submit(){
-        const { phone, image, imageName, avator, user } = this.state
-        if (!phone && !image){
-          Alert.alert("bhai pehly select to kro")
-        }
-        else{
+        const { phone, image, imageName, avator, user, lat, lng } = this.state
+        console.log('state',this.state)
             axios.post('https://final-hackathon.herokuapp.com/user/post', {
-              name: this.state.user.name,
-              email: this.state.user.email,
-              loginId: this.state.user.id,
-              avator: this.state.avator,
-              phone: this.state.phone
+              name: user.name,
+              email: user.email,
+              loginId: user.id,
+              avator: avator,
+              phone: phone,
+              lat: lat,
+              lng: lng
             })
             .then((response) => {
-              console.log(response)
               this.props.newUser(false)
-              // Alert.alert(response.message);
+              Alert.alert(response.data.message);
             })
             .catch((error) => {
               Alert.alert(error);
             });
-        }
       }
       
 
   render() {
+    console.log('this',this.state)
     const { user } = this.props
-    const { imageName, image, phone, new1 } = this.state
+    const { imageName, image, phone, new1, phoneCheck } = this.state
     return (
       <View style={styles.container}>
       { user && !this.props.new ? <Navigator />
@@ -226,12 +259,13 @@ class Login extends React.Component {
             title={!imageName ? "Pick Image" : imageName.slice(imageName.length - 20,imageName.length)}
             onPress={() => this.pickImage()}
           />
+      {imageName && phoneCheck && 
       <View style={{marginTop: 10}}>
           <Button
             title="Submit"
             onPress={() => this.submit()}
           />
-          </View>
+          </View>}
       </View>}
       </View>
     );

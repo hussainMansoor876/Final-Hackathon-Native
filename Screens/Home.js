@@ -11,7 +11,6 @@ import axios from 'axios';
 class Home extends React.Component {
   constructor(props){
     super(props);
-    console.log('user***',this.props.user)
     this.state = {
       errorMessage: ''
     }
@@ -19,17 +18,13 @@ class Home extends React.Component {
 
   componentWillMount(){
     const { user } = this.props
-    // axios.post('https://final-hackathon.herokuapp.com/user/register', {
-    //   name: user.name,
-    //   email: user.email,
-    //   loginId: user.id
-    // })
-    // .then(function (response) {
-    //   console.log('response',response);
-    // })
-    // .catch(function (error) {
-    //   console.log('error',error);
-    // });
+    axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
+    .then(function (response) {
+      console.log('response',response);
+    })
+    .catch(function (error) {
+      console.log('error',error);
+    });
     if (Platform.OS === 'android' && !Constants.isDevice) {
       this.setState({
         errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
@@ -37,7 +32,6 @@ class Home extends React.Component {
     } else {
       this._getLocationAsync();
     }
-    // const { status, expires, permissions } = await Permissions.get
   }
 
   _getLocationAsync = async () => {
@@ -62,14 +56,7 @@ class Home extends React.Component {
   }
 
   render() {
-    // let text = 'Waiting..';
-    // if (this.state.errorMessage) {
-    //   text = this.state.errorMessage;
-    // } else if (this.state.location) {
-    //   text = JSON.stringify(this.state.location);
-    // }
-    // console.log('text***',text)
-    // console.log(this.state.errorMessage) 
+    const { user } = this.props
     console.log('state***',this.state)   
     return (
         <View style={styles.container}>
