@@ -1,7 +1,7 @@
 import React from 'react';
 import { FloatingAction } from 'react-native-floating-action'
 import { StyleSheet, Text, View } from 'react-native';
-import { Header, Button } from 'react-native-elements';
+import { Header, Button, CheckBox } from 'react-native-elements';
 import { updateUser, removeUser } from '../Redux/actions/authActions'
 import { DrawerActions } from 'react-navigation-drawer';
 import { connect } from 'react-redux';
@@ -26,12 +26,41 @@ class Services extends React.Component {
     const { visible } = this.state
     const { user } = this.props
     return (
-        <View style={styles.container}>
+        <View>
         <Header
         placement="left"
         leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
         centerComponent={{ text: `Wellcome ${user.name}`, style: { color: '#fff' } }}
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
+        />
+        <CheckBox
+          title='Click Here'
+          checked={this.state.checked}
+        />
+
+        <CheckBox
+          center
+          title='Click Here'
+          checked={this.state.checked}
+        />
+
+        <CheckBox
+          center
+          title='Click Here'
+          checkedIcon='dot-circle-o'
+          uncheckedIcon='circle-o'
+          checked={this.state.checked}
+        />
+
+        <CheckBox
+          center
+          title='Click Here to Remove This Item'
+          iconRight
+          iconType='material'
+          checkedIcon='clear'
+          uncheckedIcon='add'
+          checkedColor='red'
+          checked={this.state.checked}
         />
         <FloatingAction
           // actions={actions}
