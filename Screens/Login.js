@@ -190,6 +190,7 @@ class Login extends React.Component {
             })
             .then((response) => {
               this.props.newUser(false)
+              this.props.updateUser(user)
               Alert.alert(response.data.message);
             })
             .catch((error) => {
