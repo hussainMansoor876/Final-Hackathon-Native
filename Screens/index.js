@@ -12,6 +12,5 @@ export {
     LoginScreen,
     Login1,
     Services,
-    CreateCompanyScreen,
-    Inbox
+    InboxScreen
 }
