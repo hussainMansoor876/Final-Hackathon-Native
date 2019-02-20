@@ -1,8 +1,7 @@
 import React from 'react';
-import { FloatingAction } from 'react-native-floating-action'
 import { StyleSheet, Text, View, Platform, Alert } from 'react-native';
 import { DrawerActions } from 'react-navigation-drawer';
-import { Header, Button } from 'react-native-elements';
+import { Header, Button, Input } from 'react-native-elements';
 import { Constants, Location, Permissions } from 'expo';
 import { updateUser, removeUser } from '../Redux/actions/authActions'
 import { connect } from 'react-redux';
@@ -42,11 +41,18 @@ class Home extends React.Component {
             centerComponent={{ text: `Wellcome ${user.name}`, style: { color: '#fff' } }}
             rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
           />
-        <FloatingAction
-          actions={actions}
-          onPressItem={
-            (name) => this.checkUser(name) }
-        />
+          <View style={{margin: 5}}>
+           <Input
+            placeholder='INPUT WITH ICON'
+            leftIcon={{ type: 'font-awesome', name: 'search' }}
+            inputContainerStyle={{borderColor: 'black', borderStyle: 'solid', borderWidth: 1, borderRadius: 15}}
+          />
+          </View>
+          <View style={{margin: 5}}>
+          <Button
+            title="UPDATE SERVICES"
+          />
+          </View>
       </View>
     );
   }
@@ -61,17 +67,7 @@ const styles = StyleSheet.create({
     },
   });
 
-const actions = [ {
-    text: 'Are You a Company?',
-    icon: require('../Images/hospital.png'),
-    name: 'Hospital',
-    position: 1
-  }, {
-    text: 'Normal User',
-    icon: require('../Images/user.png'),
-    name: 'Normal User',
-    position: 2
-  }];
+
 
 
 

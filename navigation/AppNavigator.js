@@ -42,7 +42,7 @@ const DrawerNavigator = createDrawerNavigator({
     Services: {
         screen: Screen.Services
     },
-    InboxChat: {
+    Inbox: {
         screen: Screen.InboxScreen
     }
 },{
