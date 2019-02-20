@@ -7,17 +7,12 @@ import { updateUser, removeUser } from '../Redux/actions/authActions'
 import { connect } from 'react-redux';
 import axios from 'axios';
 
-const users = [
-  {
-     name: 'brynn',
-     avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
-  }
- ]
 
 class Home extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      allUser: []
     }
   }
 
@@ -26,6 +21,14 @@ class Home extends React.Component {
     axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
     .then((response) => {
       this.props.updateUser(response.data[0])
+    })
+    .catch(function (error) {
+      console.log('error',error);
+    });
+    axios.get(`https://final-hackathon.herokuapp.com/user/getAll/${user.id}`)
+    .then((response) => {
+      console.log('Rest',response)
+      this.setState({allUser: response.data})
     })
     .catch(function (error) {
       console.log('error',error);
@@ -39,6 +42,7 @@ class Home extends React.Component {
 
   render() {
     const { user } = this.props
+    const { allUser } = this.state
     console.log('state***',user.avator)
     return (
         <ScrollView style={styles.container}>
@@ -60,15 +64,14 @@ class Home extends React.Component {
             title="Search"
           />
           </View>
-          <Card title={user.name}>
-            {
-              users.map((u, i) => {
-                return (
-                  <View key={i}>
+          {allUser.map((users,i) => {
+            return (
+              <Card title={users.name} key={i}>
+                  <View>
                     <Image
                       style={{height: 300, width: '100%'}}
                       resizeMode="cover"
-                      source={{ uri: user.avator }}
+                      source={{ uri: users.avator }}
                     />
                     <Text style={{marginBottom: 10}}>
                       The idea with React Native Elements is more about component structure than actual design.
@@ -79,10 +82,10 @@ class Home extends React.Component {
                       buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
                       title='VIEW NOW' />
                   </View>
-                );
-              })
-            }
-          </Card>
+            </Card>
+            )
+          })
+          }
       </ScrollView>
     );
   }
