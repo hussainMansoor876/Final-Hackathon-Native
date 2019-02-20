@@ -3,17 +3,9 @@ import { StyleSheet, Text, View,Button } from 'react-native';
 import HomeScreen from './Home'
 import LoginScreen from './Login'
 import Services from './Services'
-import CreateCompanyScreen from './CreateCompany'
+import InboxScreen from './Inbox'
 import Login1 from './Login1';
 
-const Logout = () => {
-    return(
-        <Button
-        onPress={()=> console.log("Hello")}
-        title="Logout"
-         />
-    )
-}
 
 export {
     HomeScreen,
@@ -21,5 +13,5 @@ export {
     Login1,
     Services,
     CreateCompanyScreen,
-    Logout
+    Inbox
 }
