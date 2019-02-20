@@ -13,36 +13,8 @@ class Services extends React.Component {
     this.state = {
       visible: true,
       checked: true,
-      services: [
-        {
-          name: 'electrication',
-          type: false
-        },
-        {
-          name: 'mechanic',
-          type: false
-        },
-        {
-          name: 'plumber',
-          type: false
-        },
-        {
-          name: 'bike mechanic',
-          type: false
-        },
-        {
-          name: 'car mechanic',
-          type: false
-        },
-        {
-          name: 'motor mechanic',
-          type: false
-        },
-        {
-          name: 'machine',
-          type: false
-        }
-      ]
+      services: props.user.services,
+      checkBool: false
     }
     console.log('props***',props)
   }
@@ -51,7 +23,7 @@ class Services extends React.Component {
     let servicesCopy = this.state.services
     console.log(servicesCopy[key])
     servicesCopy[key].type = !servicesCopy[key].type
-    this.setState({services: servicesCopy})
+    this.setState({services: servicesCopy, checkBool: true})
   }
 
   changeVisibility(){
@@ -64,7 +36,6 @@ class Services extends React.Component {
   updateServices(){
     const { services } = this.state
     const { user } = this.props
-    console.log(user)
     axios.put(`https://final-hackathon.herokuapp.com/user/updateService/${user.id}`,{
       services: services
     })
@@ -77,7 +48,7 @@ class Services extends React.Component {
   }
 
   render() {
-    const { visible, services } = this.state
+    const { visible, services, checkBool } = this.state
     const { user } = this.props
     return (
         <View style={{flex: 1}}>
@@ -96,10 +67,10 @@ class Services extends React.Component {
           onPress={()=> this.changeService(key,val)}          
         />
         })}
-        <Button
+        {checkBool && <Button
             title="UPDATE SERVICES  "
             onPress={() => this.updateServices()}
-          />
+          />}
         </View>
       </View>
     );

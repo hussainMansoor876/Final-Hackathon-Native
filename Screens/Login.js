@@ -30,7 +30,37 @@ class Login extends React.Component {
       errorMessage: '',
       phoneCheck: false,
       lat: '',
-      lng: ''
+      lng: '',
+      services: [
+        {
+          name: 'electrication',
+          type: false
+        },
+        {
+          name: 'mechanic',
+          type: false
+        },
+        {
+          name: 'plumber',
+          type: false
+        },
+        {
+          name: 'bike mechanic',
+          type: false
+        },
+        {
+          name: 'car mechanic',
+          type: false
+        },
+        {
+          name: 'motor mechanic',
+          type: false
+        },
+        {
+          name: 'machine',
+          type: false
+        }
+      ]
     }
   }
 
@@ -177,7 +207,7 @@ class Login extends React.Component {
       }
 
       async submit(){
-        const { phone, image, imageName, avator, user, lat, lng } = this.state
+        const { phone, image, imageName, avator, user, lat, lng, services } = this.state
         // console.log('state',this.state)
             axios.post('https://final-hackathon.herokuapp.com/user/post', {
               name: user.name,
@@ -186,7 +216,8 @@ class Login extends React.Component {
               avator: avator,
               phone: phone,
               lat: lat,
-              lng: lng
+              lng: lng,
+              services: services
             })
             .then((response) => {
               this.props.newUser(false)
