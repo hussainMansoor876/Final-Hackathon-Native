@@ -1,11 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text, View, Platform, Alert } from 'react-native';
+import { StyleSheet, Text, View, Platform, Alert, ScrollView } from 'react-native';
 import { DrawerActions } from 'react-navigation-drawer';
-import { Header, Button, Input } from 'react-native-elements';
+import { Header, Button, Input, Card, Image, Icon } from 'react-native-elements';
 import { Constants, Location, Permissions } from 'expo';
 import { updateUser, removeUser } from '../Redux/actions/authActions'
 import { connect } from 'react-redux';
 import axios from 'axios';
+
+const users = [
+  {
+     name: 'brynn',
+     avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
+  }
+ ]
 
 class Home extends React.Component {
   constructor(props){
@@ -32,9 +39,9 @@ class Home extends React.Component {
 
   render() {
     const { user } = this.props
-    // console.log('state***',this.state)   
+    console.log('state***',user.avator)
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
         <Header
             placement="left"
             leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
@@ -45,15 +52,38 @@ class Home extends React.Component {
            <Input
             placeholder='INPUT WITH ICON'
             leftIcon={{ type: 'font-awesome', name: 'search' }}
-            inputContainerStyle={{borderColor: 'black', borderStyle: 'solid', borderWidth: 1, borderRadius: 15}}
+            inputContainerStyle={{borderColor: 'black', borderStyle: 'solid', borderWidth: 1, borderRadius: 8}}
           />
           </View>
-          <View style={{margin: 5}}>
+          <View style={{marginTop: 2, marginRight: 14, marginLeft: 14, marginBottom: 5}}>
           <Button
-            title="UPDATE SERVICES"
+            title="Search"
           />
           </View>
-      </View>
+          <Card title={user.name}>
+            {
+              users.map((u, i) => {
+                return (
+                  <View key={i}>
+                    <Image
+                      style={{height: 300, width: '100%'}}
+                      resizeMode="cover"
+                      source={{ uri: user.avator }}
+                    />
+                    <Text style={{marginBottom: 10}}>
+                      The idea with React Native Elements is more about component structure than actual design.
+                    </Text>
+                    <Button
+                      icon={<Icon name='code' color='#ffffff' />}
+                      backgroundColor='#03A9F4'
+                      buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                      title='VIEW NOW' />
+                  </View>
+                );
+              })
+            }
+          </Card>
+      </ScrollView>
     );
   }
 }

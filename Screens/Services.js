@@ -1,6 +1,6 @@
 import React from 'react';
 import { FloatingAction } from 'react-native-floating-action'
-import { StyleSheet, Text, View, Alert } from 'react-native';
+import { StyleSheet, Text, View, Alert, ScrollView } from 'react-native';
 import { Header, Button, CheckBox } from 'react-native-elements';
 import { updateUser, removeUser } from '../Redux/actions/authActions'
 import { DrawerActions } from 'react-navigation-drawer';
@@ -16,7 +16,6 @@ class Services extends React.Component {
       services: props.user.services,
       checkBool: false
     }
-    console.log('props***',props)
   }
 
   changeService(key,val){
@@ -60,7 +59,7 @@ class Services extends React.Component {
     const { visible, services, checkBool } = this.state
     const { user } = this.props
     return (
-        <View style={{flex: 1}}>
+        <ScrollView style={{flex: 1}}>
         <Header
         placement="left"
         leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
@@ -73,7 +72,7 @@ class Services extends React.Component {
           key={key}
           title={val.name.toLocaleUpperCase()}
           checked={val.type}
-          onPress={()=> this.changeService(key,val)}          
+          onPress={()=> this.changeService(key,val)}
         />
         })}
         {checkBool && <Button
@@ -81,7 +80,7 @@ class Services extends React.Component {
             onPress={() => this.updateServices()}
           />}
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
