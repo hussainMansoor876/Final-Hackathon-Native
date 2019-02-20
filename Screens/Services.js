@@ -1,6 +1,6 @@
 import React from 'react';
 import { FloatingAction } from 'react-native-floating-action'
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Alert } from 'react-native';
 import { Header, Button, CheckBox } from 'react-native-elements';
 import { updateUser, removeUser } from '../Redux/actions/authActions'
 import { DrawerActions } from 'react-navigation-drawer';
@@ -63,16 +63,17 @@ class Services extends React.Component {
 
   updateServices(){
     const { services } = this.state
-    const { user } = this.state
-    axios.post(`http://localhost:5000/user/updateService/${user.id}`, {
+    const { user } = this.props
+    console.log(user)
+    axios.put(`https://final-hackathon.herokuapp.com/user/updateService/${user.id}`,{
       services: services
-      })
-      .then((response) => {
-        Alert.alert(response.data.message);
-      })
-      .catch((error) => {
-        Alert.alert(error);
-      });
+    })
+    .then((response) => {
+      console.log('response',response);
+    })
+    .catch(function (error) {
+      console.log('error',error);
+    });
   }
 
   render() {

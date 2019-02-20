@@ -17,14 +17,14 @@ class Home extends React.Component {
 
   componentWillMount(){
     const { user } = this.props
-    // axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
-    // .then((response) => {
-    //   console.log('response',response.data[0]);
-    //   this.props.updateUser(response.data[0])
-    // })
-    // .catch(function (error) {
-    //   console.log('error',error);
-    // });
+    axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
+    .then((response) => {
+      console.log('response',response.data[0]);
+      this.props.updateUser(response.data[0])
+    })
+    .catch(function (error) {
+      console.log('error',error);
+    });
   }
 
 

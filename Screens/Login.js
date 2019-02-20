@@ -130,7 +130,7 @@ class Login extends React.Component {
       }
 
       async pickImage(){
-        const { user } = this.state
+        const { user } = this.props
         let result = await ImagePicker.launchImageLibraryAsync({
           allowsEditing: true,
           aspect: [5, 6],
@@ -149,7 +149,7 @@ class Login extends React.Component {
       
 
       uploadImage = async (uri,imageName) => {
-        const { user } = this.state
+        const { user } = this.props
         const blob = await new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest();
           xhr.onload = function() {
