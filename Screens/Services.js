@@ -40,7 +40,16 @@ class Services extends React.Component {
       services: services
     })
     .then((response) => {
-      console.log('response',response);
+      Alert.alert(response.data.message)
+      this.setState({checkBool: false})
+      axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
+      .then((response) => {
+        this.props.updateUser(response.data[0])
+        this.props.navigation.navigate('Home')
+      })
+      .catch(function (error) {
+        console.log('error',error);
+      });
     })
     .catch(function (error) {
       console.log('error',error);
@@ -100,4 +109,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-export default connect(mapStateToProps)(Services)
+export default connect(mapStateToProps,mapDispatchToProps)(Services)
