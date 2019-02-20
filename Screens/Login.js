@@ -130,12 +130,11 @@ class Login extends React.Component {
       }
 
       async pickImage(){
-        const { user } = this.props
+        const { user } = this.state
         let result = await ImagePicker.launchImageLibraryAsync({
           allowsEditing: true,
           aspect: [5, 6],
         })
-        console.log(result)
     
         if (!result.cancelled) {
           this.uploadImage(result.uri,"mansoor")
@@ -150,7 +149,7 @@ class Login extends React.Component {
       
 
       uploadImage = async (uri,imageName) => {
-        const { user } = this.props
+        const { user } = this.state
         const blob = await new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest();
           xhr.onload = function() {
@@ -178,8 +177,7 @@ class Login extends React.Component {
       }
 
       async submit(){
-        const { phone, image, imageName, avator, lat, lng } = this.state
-        const { user } = this.props
+        const { phone, image, imageName, avator, user, lat, lng } = this.state
         // console.log('state',this.state)
             axios.post('https://final-hackathon.herokuapp.com/user/post', {
               name: user.name,
