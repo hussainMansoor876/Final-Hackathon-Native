@@ -11,8 +11,8 @@ const StackNavigator = createStackNavigator({
     Services: {
         screen: Screen.Services
     },
-    CreateCompany: {
-        screen: Screen.CreateCompanyScreen
+    Inbox: {
+        screen: Screen.Inbox
     }
 },
 {
@@ -30,8 +30,8 @@ const TabNavigator = createMaterialTopTabNavigator({
     Company: {
         screen: Screen.Services
     },
-    CreateCompany: {
-        screen: Screen.CreateCompanyScreen
+    Inbox: {
+        screen: Screen.Inbox
     }
 })
 
@@ -42,8 +42,8 @@ const DrawerNavigator = createDrawerNavigator({
     Services: {
         screen: Screen.Services
     },
-    CreateCompany: {
-        screen: Screen.CreateCompanyScreen
+    Inbox: {
+        screen: Screen.Inbox
     }
 },{
     drawerWidth: 230,
@@ -57,8 +57,8 @@ const BottomNavigator = createBottomTabNavigator({
     Company: {
         screen: Screen.Services
     },
-    CreateCompany: {
-        screen: Screen.CreateCompanyScreen
+    Inbox: {
+        screen: Screen.Inbox
     }
     })
 
@@ -69,8 +69,8 @@ const SwitchNavigator = createSwitchNavigator({
     Company: {
         screen: Screen.Services
     },
-    CreateCompany: {
-        screen: Screen.CreateCompanyScreen
+    Inbox: {
+        screen: Screen.Inbox
     }
     })
 

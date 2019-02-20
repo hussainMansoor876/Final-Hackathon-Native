@@ -3,7 +3,7 @@ import { StyleSheet, Text, View,Button } from 'react-native';
 import HomeScreen from './Home'
 import LoginScreen from './Login'
 import Services from './Services'
-import InboxScreen from './Inbox'
+import InboxScreen from './InboxChat'
 import Login1 from './Login1';
 
 
