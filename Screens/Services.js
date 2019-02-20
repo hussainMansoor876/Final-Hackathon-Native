@@ -5,6 +5,7 @@ import { Header, Button, CheckBox } from 'react-native-elements';
 import { updateUser, removeUser } from '../Redux/actions/authActions'
 import { DrawerActions } from 'react-navigation-drawer';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 class Services extends React.Component {
   constructor(props){
@@ -61,7 +62,17 @@ class Services extends React.Component {
   }
 
   updateServices(){
-    
+    const { services } = this.state
+    const { user } = this.state
+    axios.post(`http://localhost:5000/user/updateService/${user.id}`, {
+      services: services
+      })
+      .then((response) => {
+        Alert.alert(response.data.message);
+      })
+      .catch((error) => {
+        Alert.alert(error);
+      });
   }
 
   render() {
