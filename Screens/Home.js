@@ -14,7 +14,7 @@ class Home extends React.Component {
     this.state = {
       allUser: [],
       activeIndex: 0,
-      activeValue: '',
+      activeValue: 'select category',
       active: 'select category',
       allServices: [
         {
@@ -68,6 +68,15 @@ class Home extends React.Component {
     });
   }
 
+  updatePicker(val,i){
+    this.setState({activeIndex: i, activeValue: val},()=>{
+      console.log('updated',this.state.activeValue)
+      if(this.state.activeValue === "select category"){
+        console.log("Hello")
+      }
+    })
+  }
+
 
   render() {
     const { user } = this.props
@@ -83,7 +92,7 @@ class Home extends React.Component {
           <View style={{borderColor: 'black', borderStyle: 'solid', borderWidth: 1, marginTop: 5,marginBottom: 5,marginRight: 10,marginLeft: 10, borderRadius: 8}}>
           <Picker 
           style={{height: 50, width: '100%'}}
-          onValueChange={(val,i)=> this.setState({activeIndex: i, activeValue: val})}
+          onValueChange={(val,i)=> this.updatePicker(val,i)}
           selectedValue={!activeIndex ? active : allServices[activeIndex - 1].name}
           >
           <Picker.Item label={active.toLocaleUpperCase()} value={active}/>
