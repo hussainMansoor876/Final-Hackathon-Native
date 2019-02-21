@@ -1,25 +1,64 @@
 import React from 'react';
 import { FloatingAction } from 'react-native-floating-action'
 import { StyleSheet, Text, View, Alert, ScrollView } from 'react-native';
-import { Header, Button, ListItem } from 'react-native-elements';
-import { updateUser, removeUser } from '../Redux/actions/authActions'
+import { Header, Button, CheckBox, ListItem } from 'react-native-elements';
+import { updateUser, removeUser, allUser } from '../Redux/actions/authActions'
 import { DrawerActions } from 'react-navigation-drawer';
 import { connect } from 'react-redux';
 import TouchableScale from 'react-native-touchable-scale';
 import LinearGradient from 'react-native-linear-gradient';
 import axios from 'axios';
 
-
-class Inbox extends React.Component {
+class InboxChat extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      visible: true,
+      checked: true,
+      services: props.user.services,
+      checkBool: false
     }
+  }
+
+  changeService(key,val){
+    let servicesCopy = this.state.services
+    console.log(servicesCopy[key])
+    servicesCopy[key].type = !servicesCopy[key].type
+    this.setState({services: servicesCopy, checkBool: true})
+  }
+
+  changeVisibility(){
+    const { visible } = this.state
+    this.setState({
+      visible: !visible
+    })
+  }
+
+  updateServices(){
+    const { services } = this.state
+    const { user } = this.props
+    axios.put(`https://final-hackathon.herokuapp.com/user/updateService/${user.id}`,{
+      services: services
+    })
+    .then((response) => {
+      Alert.alert(response.data.message)
+      this.setState({checkBool: false})
+      axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
+      .then((response) => {
+        this.props.updateUser(response.data[0])
+        this.props.navigation.navigate('Home')
+      })
+      .catch(function (error) {
+        console.log('error',error);
+      });
+    })
+    .catch(function (error) {
+      console.log('error',error);
+    });
   }
 
   render() {
     const { user, userList } = this.props
-    console.log(userList)
     return (
         <View style={{flex: 1}}>
         <Header
@@ -76,9 +115,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     updateUser: (user) => dispatch(updateUser(user)),
+    allUser: (userList) => dispatch(allUser(userList)),
     removeUser: () => dispatch(removeUser())
   }
 }
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(Inbox)
+export default connect(mapStateToProps,mapDispatchToProps)(InboxChat)

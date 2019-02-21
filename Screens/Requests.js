@@ -32,14 +32,14 @@ class Requests extends React.Component {
             icon={<Icon type='font-awesome' name='comments' color='#ffffff' />}
             backgroundColor='#03A9F4'
             buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green'}}
-            title='CHAT' />
+            title='ReCEIVED' />
         </View>
         <View style={{flex: 1, margin: 0.5}}>
         <Button
             icon={<Icon type='font-awesome' name='plus' color='#ffffff' />}
             backgroundColor='#03A9F4'
             buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-            title='HIRE' />
+            title='SEND' />
             </View>
         </View>
         </View>
