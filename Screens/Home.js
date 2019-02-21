@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Platform, Alert, ScrollView, Picker } from 'react-native';
 import { DrawerActions } from 'react-navigation-drawer';
-import { Header, Button, Input, Card, Image, Icon, Overlay } from 'react-native-elements';
+import { Header, Button, Input, Card, Image, Icon, Overlay, Rating, AirbnbRating } from 'react-native-elements';
 import { Constants, Location, Permissions } from 'expo';
 import { updateUser, removeUser, allUser } from '../Redux/actions/authActions'
 import { connect } from 'react-redux';
@@ -146,17 +146,27 @@ class Home extends React.Component {
                     <Button
                       icon={<Icon type='font-awesome' name='comments' color='#ffffff' />}
                       backgroundColor='#03A9F4'
-                      buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green'}}
+                      buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green'}}
                       title='CHAT' />
                     </View>
                     <View style={{flex: 1, margin: 0.5}}>
                     <Button
-                      icon={<Icon type='font-awesome' name='comments' color='#ffffff' />}
+                      icon={<Icon type='font-awesome' name='plus' color='#ffffff' />}
                       backgroundColor='#03A9F4'
-                      buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                      title='CHAT' />
+                      buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                      title='HIRE' />
                       </View>
                     </View>
+                    <Rating
+                    showRating={false}
+                    ratingCount={5}
+                    readonly
+                    startingValue={4.5}
+                    fractions={20}
+                    onFinishRating={(u,i) => console.log(u)}
+                    onStartRating={() => console.log("Bye")}
+                    style={{ paddingVertical: 10 }}
+                  />
                   </View>
             </Card>
             )

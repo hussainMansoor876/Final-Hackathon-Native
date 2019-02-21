@@ -10,7 +10,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import axios from 'axios';
 
 
-class Inbox extends React.Component {
+class Requests extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -46,7 +46,7 @@ class Inbox extends React.Component {
                 title={l.name}
                 titleStyle={{ color: 'white', fontWeight: 'bold' }}
                 subtitleStyle={{ color: 'white' }}
-                subtitle={l.email ? l.email : null}
+                subtitle={l.phone}
                 containerStyle={{borderColor: 'white', borderWidth: 0.5, borderStyle: 'solid', marginLeft: 5, marginRight: 5, borderRadius: 5}}
               />
             ))
@@ -81,4 +81,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(Inbox)
+export default connect(mapStateToProps,mapDispatchToProps)(Requests)

@@ -5,6 +5,7 @@ import LoginScreen from './Login'
 import Services from './Services'
 import InboxScreen from './InboxChat'
 import Login1 from './Login1';
+import Requests from './Requests';
 
 
 export {
@@ -12,5 +13,6 @@ export {
     LoginScreen,
     Login1,
     Services,
-    InboxScreen
+    InboxScreen,
+    Requests
 }

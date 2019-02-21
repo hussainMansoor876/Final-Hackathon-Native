@@ -42,6 +42,9 @@ const DrawerNavigator = createDrawerNavigator({
     Services: {
         screen: Screen.Services
     },
+    Requests: {
+        screen: Screen.Requests
+    },
     Inbox: {
         screen: Screen.InboxScreen
     }
