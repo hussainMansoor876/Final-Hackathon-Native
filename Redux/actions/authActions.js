@@ -28,5 +28,6 @@ const allUser = (usersList) => {
 export {
     updateUser,
     newUser,
-    removeUser
+    removeUser,
+    allUser
 }

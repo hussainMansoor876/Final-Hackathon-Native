@@ -51,16 +51,15 @@ class Home extends React.Component {
 
   componentWillMount(){
     const { user } = this.props
-    axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
-    .then((response) => {
-      this.props.updateUser(response.data[0])
-    })
-    .catch(function (error) {
-      console.log('error',error);
-    });
+    // axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
+    // .then((response) => {
+    //   this.props.updateUser(response.data[0])
+    // })
+    // .catch(function (error) {
+    //   console.log('error',error);
+    // });
     axios.get(`https://final-hackathon.herokuapp.com/user/getAll/${user.id}`)
     .then((response) => {
-      console.log('Rest',response)
       this.setState({allUser: response.data})
     })
     .catch(function (error) {

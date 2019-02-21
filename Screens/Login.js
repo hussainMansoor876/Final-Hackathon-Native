@@ -207,7 +207,18 @@ class Login extends React.Component {
       }
 
       async submit(){
-        const { phone, image, imageName, avator, user, lat, lng, services } = this.state
+        const { phone, image, imageName, avator, lat, lng, services } = this.state
+        const { user } = this.props
+        const data = {
+          name: user.name,
+          email: user.email,
+          id: user.id,
+          avator: avator,
+          phone: phone,
+          lat: lat,
+          lng: lng,
+          services: services
+        }
         // console.log('state',this.state)
             axios.post('https://final-hackathon.herokuapp.com/user/post', {
               name: user.name,
@@ -221,7 +232,7 @@ class Login extends React.Component {
             })
             .then((response) => {
               this.props.newUser(false)
-              this.props.updateUser(user)
+              this.props.updateUser(data)
               Alert.alert(response.data.message);
             })
             .catch((error) => {
