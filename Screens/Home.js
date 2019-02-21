@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Platform, Alert, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Platform, Alert, ScrollView, Picker } from 'react-native';
 import { DrawerActions } from 'react-navigation-drawer';
-import { Header, Button, Input, Card, Image, Icon } from 'react-native-elements';
+import { Header, Button, Input, Card, Image, Icon, Overlay } from 'react-native-elements';
 import { Constants, Location, Permissions } from 'expo';
 import { updateUser, removeUser } from '../Redux/actions/authActions'
 import { connect } from 'react-redux';
@@ -43,16 +43,22 @@ class Home extends React.Component {
   render() {
     const { user } = this.props
     const { allUser } = this.state
-    console.log('state***',user.avator)
     return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
         <Header
             placement="left"
             leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
             centerComponent={{ text: `Wellcome ${user.name}`, style: { color: '#fff' } }}
             rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
           />
-          <View style={{margin: 5}}>
+          <View style={{borderColor: 'black', borderStyle: 'solid', borderWidth: 1, marginTop: 5,marginBottom: 5,marginRight: 10,marginLeft: 10, borderRadius: 8}}>
+          <Picker>
+            <Picker.Item label="Java" value="java" />
+            <Picker.Item label="JavaScript" value="js" />
+          </Picker>
+          </View>
+          <ScrollView>
+          {/* <View style={{margin: 5}}>
            <Input
             placeholder='INPUT WITH ICON'
             leftIcon={{ type: 'font-awesome', name: 'search' }}
@@ -63,7 +69,7 @@ class Home extends React.Component {
           <Button
             title="Search"
           />
-          </View>
+          </View> */}
           {allUser.map((users,i) => {
             return (
               <Card title={users.name} key={i}>
@@ -87,6 +93,7 @@ class Home extends React.Component {
           })
           }
       </ScrollView>
+      </View>
     );
   }
 }
