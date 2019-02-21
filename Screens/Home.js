@@ -102,7 +102,6 @@ class Home extends React.Component {
 
   render() {
     const { user } = this.props
-    console.log('user',this.props)
     const { allUser, allServices, active, activeIndex } = this.state
     return (
         <View style={styles.container}>

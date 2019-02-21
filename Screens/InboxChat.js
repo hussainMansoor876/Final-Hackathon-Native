@@ -5,6 +5,8 @@ import { Header, Button, ListItem } from 'react-native-elements';
 import { updateUser, removeUser } from '../Redux/actions/authActions'
 import { DrawerActions } from 'react-navigation-drawer';
 import { connect } from 'react-redux';
+import TouchableScale from 'react-native-touchable-scale';
+import LinearGradient from 'react-native-linear-gradient';
 import axios from 'axios';
 
 const list = [
@@ -28,7 +30,8 @@ class Inbox extends React.Component {
   }
 
   render() {
-    const { user } = this.props
+    const { user, userList } = this.props
+    console.log(userList)
     return (
         <View style={{flex: 1}}>
         <Header
@@ -41,10 +44,22 @@ class Inbox extends React.Component {
         {list.map((l, i) => (
               <ListItem
                 key={i}
-                leftAvatar={{ source: { uri: l.avatar_url } }}
+                Component={TouchableScale}
+                friction={90} //
+                tension={100} // These props are passed to the parent component (here TouchableScale)
+                activeScale={0.95} //
+                linearGradientProps={{
+                  colors: ['azure', 'aqua'],
+                  start: [1, 0],
+                  end: [0.2, 0],
+                }}
+                badge={{ value: 3, textStyle: { color: 'white' }, containerStyle: { marginTop: -20 } }}
+                leftAvatar={{ rounded: true, source: { uri: l.avatar_url } }}
                 title={l.name}
+                titleStyle={{ color: 'white', fontWeight: 'bold' }}
+                subtitleStyle={{ color: 'white' }}
                 subtitle={l.subtitle}
-                badge={{ value: 3, textStyle: { color: 'orange' }, containerStyle: { marginTop: -20 } }}
+                containerStyle={{borderColor: 'white', borderWidth: 0.5, borderStyle: 'solid', marginLeft: 5, marginRight: 5, borderRadius: 5}}
               />
             ))
           }
@@ -65,7 +80,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   console.log("mapToState",state.authReducer)
   return {
-    user: state.authReducer.user
+    user: state.authReducer.user,
+    userList: state.authReducer.userList
   }
 }
 
