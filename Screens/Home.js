@@ -69,10 +69,30 @@ class Home extends React.Component {
   }
 
   updatePicker(val,i){
+    const { user } = this.props
     this.setState({activeIndex: i, activeValue: val},()=>{
-      console.log('updated',this.state.activeValue)
-      if(this.state.activeValue === "select category"){
-        console.log("Hello")
+      const { activeValue } = this.state
+      if(activeValue === "select category"){
+        axios.get(`https://final-hackathon.herokuapp.com/user/getAll/${user.id}`)
+        .then((response) => {
+          console.log('Rest',response)
+          this.setState({allUser: response.data})
+        })
+        .catch(function (error) {
+          console.log('error',error);
+        });
+      }
+      else{
+        axios.post(`https://final-hackathon.herokuapp.com/user/service`,{
+          name: activeValue
+        })
+        .then((response) => {
+          console.log('Response',response)
+          this.setState({allUser: response.data})
+        })
+        .catch(function (error) {
+          console.log('error',error);
+        });
       }
     })
   }

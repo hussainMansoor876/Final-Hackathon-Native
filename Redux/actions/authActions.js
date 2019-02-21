@@ -18,6 +18,13 @@ const removeUser = () => {
     }
 }
 
+const allUser = (usersList) => {
+    return {
+        type: "ALL_USER",
+        usersList
+    }
+}
+
 export {
     updateUser,
     newUser,
