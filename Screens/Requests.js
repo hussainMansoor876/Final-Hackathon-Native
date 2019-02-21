@@ -1,58 +1,86 @@
 import React from 'react';
 import { FloatingAction } from 'react-native-floating-action'
 import { StyleSheet, Text, View, Alert, ScrollView } from 'react-native';
-import { Header, Button, ListItem } from 'react-native-elements';
+import { Header, Button, CheckBox } from 'react-native-elements';
 import { updateUser, removeUser } from '../Redux/actions/authActions'
 import { DrawerActions } from 'react-navigation-drawer';
 import { connect } from 'react-redux';
-import TouchableScale from 'react-native-touchable-scale';
-import LinearGradient from 'react-native-linear-gradient';
 import axios from 'axios';
-
 
 class Requests extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      visible: true,
+      checked: true,
+      services: props.user.services,
+      checkBool: false
     }
   }
 
+  changeService(key,val){
+    let servicesCopy = this.state.services
+    console.log(servicesCopy[key])
+    servicesCopy[key].type = !servicesCopy[key].type
+    this.setState({services: servicesCopy, checkBool: true})
+  }
+
+  changeVisibility(){
+    const { visible } = this.state
+    this.setState({
+      visible: !visible
+    })
+  }
+
+  updateServices(){
+    const { services } = this.state
+    const { user } = this.props
+    axios.put(`https://final-hackathon.herokuapp.com/user/updateService/${user.id}`,{
+      services: services
+    })
+    .then((response) => {
+      Alert.alert(response.data.message)
+      this.setState({checkBool: false})
+      axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
+      .then((response) => {
+        this.props.updateUser(response.data[0])
+        this.props.navigation.navigate('Home')
+      })
+      .catch(function (error) {
+        console.log('error',error);
+      });
+    })
+    .catch(function (error) {
+      console.log('error',error);
+    });
+  }
+
   render() {
-    const { user, userList } = this.props
-    console.log(userList)
+    const { visible, services, checkBool } = this.state
+    const { user } = this.props
     return (
-        <View style={{flex: 1}}>
+        <ScrollView style={{flex: 1}}>
         <Header
         placement="left"
         leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
         centerComponent={{ text: `Wellcome ${user.name}`, style: { color: '#fff' } }}
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
-        <ScrollView>
-        {userList.map((l, i) => (
-              <ListItem
-                key={i}
-                Component={TouchableScale}
-                friction={90}
-                tension={100}
-                activeScale={0.95} //
-                linearGradientProps={{
-                  colors: ['azure', 'aqua'],
-                  start: [1, 0],
-                  end: [0.2, 0],
-                }}
-                badge={{ value: 1, textStyle: { color: 'white' }, containerStyle: { marginTop: -20 } }}
-                leftAvatar={{ rounded: true, source: { uri: l.avator } }}
-                title={l.name}
-                titleStyle={{ color: 'white', fontWeight: 'bold' }}
-                subtitleStyle={{ color: 'white' }}
-                subtitle={l.phone}
-                containerStyle={{borderColor: 'white', borderWidth: 0.5, borderStyle: 'solid', marginLeft: 5, marginRight: 5, borderRadius: 5}}
-              />
-            ))
-          }
-        </ScrollView>
-      </View>
+        <View style={styles.container}>
+        {services.map((val,key)=>{
+          return <CheckBox
+          key={key}
+          title={val.name.toLocaleUpperCase()}
+          checked={val.type}
+          onPress={()=> this.changeService(key,val)}
+        />
+        })}
+        {checkBool && <Button
+            title="UPDATE SERVICES  "
+            onPress={() => this.updateServices()}
+          />}
+        </View>
+      </ScrollView>
     );
   }
 }
@@ -68,8 +96,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   console.log("mapToState",state.authReducer)
   return {
-    user: state.authReducer.user,
-    userList: state.authReducer.userList
+    user: state.authReducer.user
   }
 }
 
