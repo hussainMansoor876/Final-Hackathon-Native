@@ -121,19 +121,8 @@ class Home extends React.Component {
           </Picker>
           </View>
           <ScrollView>
-          {/* <View style={{margin: 5}}>
-           <Input
-            placeholder='INPUT WITH ICON'
-            leftIcon={{ type: 'font-awesome', name: 'search' }}
-            inputContainerStyle={{borderColor: 'black', borderStyle: 'solid', borderWidth: 1, borderRadius: 8}}
-          />
-          </View>
-          <View style={{marginTop: 2, marginRight: 14, marginLeft: 14, marginBottom: 5}}>
-          <Button
-            title="Search"
-          />
-          </View> */}
-          {allUser.map((users,i) => {
+
+          {allUser.length ? allUser.map((users,i) => {
             return (
               <Card title={users.name} key={i}>
                   <View>
@@ -154,6 +143,10 @@ class Home extends React.Component {
             </Card>
             )
           })
+          : 
+          <View style={{marginTop: 30, marginRight: 10, marginLeft: 10}}>
+          <Text>OOPS!!! NOT Found</Text>
+          </View>
           }
       </ScrollView>
       </View>
