@@ -12,7 +12,40 @@ class Home extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      allUser: []
+      allUser: [],
+      activeIndex: 0,
+      activeValue: '',
+      active: 'select category',
+      allServices: [
+        {
+          name: 'electrication',
+          type: false
+        },
+        {
+          name: 'mechanic',
+          type: false
+        },
+        {
+          name: 'plumber',
+          type: false
+        },
+        {
+          name: 'bike mechanic',
+          type: false
+        },
+        {
+          name: 'car mechanic',
+          type: false
+        },
+        {
+          name: 'motor mechanic',
+          type: false
+        },
+        {
+          name: 'machine',
+          type: false
+        }
+      ]
     }
   }
 
@@ -36,13 +69,9 @@ class Home extends React.Component {
   }
 
 
-  checkUser(name){
-    name == "Hospital" && this.props.navigation.navigate('Company')
-  }
-
   render() {
     const { user } = this.props
-    const { allUser } = this.state
+    const { allUser, allServices, active, activeIndex } = this.state
     return (
         <View style={styles.container}>
         <Header
@@ -52,9 +81,15 @@ class Home extends React.Component {
             rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
           />
           <View style={{borderColor: 'black', borderStyle: 'solid', borderWidth: 1, marginTop: 5,marginBottom: 5,marginRight: 10,marginLeft: 10, borderRadius: 8}}>
-          <Picker>
-            <Picker.Item label="Java" value="java" />
-            <Picker.Item label="JavaScript" value="js" />
+          <Picker 
+          style={{height: 50, width: '100%'}}
+          onValueChange={(val,i)=> this.setState({activeIndex: i, activeValue: val})}
+          selectedValue={!activeIndex ? active : allServices[activeIndex - 1].name}
+          >
+          <Picker.Item label={active.toLocaleUpperCase()} value={active}/>
+            {allServices.map((u,i) =>{
+              return <Picker.Item label={u.name.toLocaleUpperCase()} value={u.name} key={i}/>
+            })}
           </Picker>
           </View>
           <ScrollView>
