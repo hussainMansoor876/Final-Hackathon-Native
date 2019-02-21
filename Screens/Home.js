@@ -141,12 +141,21 @@ class Home extends React.Component {
                         )
                       })}
                     </Text>
-                    <View style={{flex: 1}}>
+                    <View style={{flex: 1, flexDirection: 'row'}}>
+                    <View style={{flex: 1, margin: 0.5}}>
+                    <Button
+                      icon={<Icon type='font-awesome' name='comments' color='#ffffff' />}
+                      backgroundColor='#03A9F4'
+                      buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green'}}
+                      title='CHAT' />
+                    </View>
+                    <View style={{flex: 1, margin: 0.5}}>
                     <Button
                       icon={<Icon type='font-awesome' name='comments' color='#ffffff' />}
                       backgroundColor='#03A9F4'
                       buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                      title='VIEW NOW' />
+                      title='CHAT' />
+                      </View>
                     </View>
                   </View>
             </Card>

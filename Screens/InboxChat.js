@@ -41,24 +41,24 @@ class Inbox extends React.Component {
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
         <ScrollView>
-        {list.map((l, i) => (
+        {userList.map((l, i) => (
               <ListItem
                 key={i}
                 Component={TouchableScale}
-                friction={90} //
-                tension={100} // These props are passed to the parent component (here TouchableScale)
+                friction={90}
+                tension={100}
                 activeScale={0.95} //
                 linearGradientProps={{
                   colors: ['azure', 'aqua'],
                   start: [1, 0],
                   end: [0.2, 0],
                 }}
-                badge={{ value: 3, textStyle: { color: 'white' }, containerStyle: { marginTop: -20 } }}
-                leftAvatar={{ rounded: true, source: { uri: l.avatar_url } }}
+                badge={{ value: 1, textStyle: { color: 'white' }, containerStyle: { marginTop: -20 } }}
+                leftAvatar={{ rounded: true, source: { uri: l.avator } }}
                 title={l.name}
                 titleStyle={{ color: 'white', fontWeight: 'bold' }}
                 subtitleStyle={{ color: 'white' }}
-                subtitle={l.subtitle}
+                subtitle={l.phone}
                 containerStyle={{borderColor: 'white', borderWidth: 0.5, borderStyle: 'solid', marginLeft: 5, marginRight: 5, borderRadius: 5}}
               />
             ))
