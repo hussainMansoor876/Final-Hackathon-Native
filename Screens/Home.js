@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Platform, Alert, ScrollView, Picker } from 'rea
 import { DrawerActions } from 'react-navigation-drawer';
 import { Header, Button, Input, Card, Image, Icon, Overlay } from 'react-native-elements';
 import { Constants, Location, Permissions } from 'expo';
-import { updateUser, removeUser } from '../Redux/actions/authActions'
+import { updateUser, removeUser, allUser } from '../Redux/actions/authActions'
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -61,6 +61,7 @@ class Home extends React.Component {
     axios.get(`https://final-hackathon.herokuapp.com/user/getAll/${user.id}`)
     .then((response) => {
       this.setState({allUser: response.data})
+      this.props.allUser(response.data)
     })
     .catch(function (error) {
       console.log('error',error);
@@ -76,6 +77,7 @@ class Home extends React.Component {
         .then((response) => {
           console.log('Rest',response)
           this.setState({allUser: response.data})
+          this.props.allUser(response.data)      
         })
         .catch(function (error) {
           console.log('error',error);
@@ -88,6 +90,7 @@ class Home extends React.Component {
         .then((response) => {
           console.log('Response',response)
           this.setState({allUser: response.data})
+          this.props.allUser(response.data)          
         })
         .catch(function (error) {
           console.log('error',error);
@@ -99,7 +102,7 @@ class Home extends React.Component {
 
   render() {
     const { user } = this.props
-    console.log('user',user)
+    console.log('user',this.props)
     const { allUser, allServices, active, activeIndex } = this.state
     return (
         <View style={styles.container}>
@@ -179,13 +182,15 @@ const styles = StyleSheet.create({
   const mapStateToProps = (state) => {
     console.log("mapToState",state.authReducer)
     return {
-      user: state.authReducer.user
+      user: state.authReducer.user,
+      userList: state.authReducer.userList
     }
   }
   
   const mapDispatchToProps = (dispatch) => {
     return {
       updateUser: (user) => dispatch(updateUser(user)),
+      allUser: (userList) => dispatch(allUser(userList)),
       removeUser: () => dispatch(removeUser())
     }
   }

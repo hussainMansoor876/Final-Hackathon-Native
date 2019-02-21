@@ -18,10 +18,10 @@ const removeUser = () => {
     }
 }
 
-const allUser = (usersList) => {
+const allUser = (userList) => {
     return {
         type: "ALL_USER",
-        usersList
+        userList
     }
 }
 

@@ -44,6 +44,7 @@ class Inbox extends React.Component {
                 leftAvatar={{ source: { uri: l.avatar_url } }}
                 title={l.name}
                 subtitle={l.subtitle}
+                badge={{ value: 3, textStyle: { color: 'orange' }, containerStyle: { marginTop: -20 } }}
               />
             ))
           }
