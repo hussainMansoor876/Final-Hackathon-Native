@@ -1,11 +1,24 @@
 import React from 'react';
 import { FloatingAction } from 'react-native-floating-action'
 import { StyleSheet, Text, View, Alert, ScrollView } from 'react-native';
-import { Header, Button, CheckBox } from 'react-native-elements';
+import { Header, Button, ListItem } from 'react-native-elements';
 import { updateUser, removeUser } from '../Redux/actions/authActions'
 import { DrawerActions } from 'react-navigation-drawer';
 import { connect } from 'react-redux';
 import axios from 'axios';
+
+const list = [
+  {
+    name: 'Amy Farha',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+    subtitle: 'Vice President'
+  },
+  {
+    name: 'Chris Jackson',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+    subtitle: 'Vice Chairman'
+  }
+]
 
 class Inbox extends React.Component {
   constructor(props){
@@ -17,14 +30,25 @@ class Inbox extends React.Component {
   render() {
     const { user } = this.props
     return (
-        <ScrollView style={{flex: 1}}>
+        <View style={{flex: 1}}>
         <Header
         placement="left"
         leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
         centerComponent={{ text: `Wellcome ${user.name}`, style: { color: '#fff' } }}
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
-      </ScrollView>
+        <ScrollView>
+        {list.map((l, i) => (
+              <ListItem
+                key={i}
+                leftAvatar={{ source: { uri: l.avatar_url } }}
+                title={l.name}
+                subtitle={l.subtitle}
+              />
+            ))
+          }
+        </ScrollView>
+      </View>
     );
   }
 }
