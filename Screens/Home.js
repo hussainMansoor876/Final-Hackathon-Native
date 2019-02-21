@@ -51,13 +51,13 @@ class Home extends React.Component {
 
   componentWillMount(){
     const { user } = this.props
-    // axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
-    // .then((response) => {
-    //   this.props.updateUser(response.data[0])
-    // })
-    // .catch(function (error) {
-    //   console.log('error',error);
-    // });
+    axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
+    .then((response) => {
+      this.props.updateUser(response.data[0])
+    })
+    .catch(function (error) {
+      console.log('error',error);
+    });
     axios.get(`https://final-hackathon.herokuapp.com/user/getAll/${user.id}`)
     .then((response) => {
       this.setState({allUser: response.data})
@@ -99,6 +99,7 @@ class Home extends React.Component {
 
   render() {
     const { user } = this.props
+    console.log('user',user)
     const { allUser, allServices, active, activeIndex } = this.state
     return (
         <View style={styles.container}>
@@ -131,14 +132,20 @@ class Home extends React.Component {
                       resizeMode="cover"
                       source={{ uri: users.avator }}
                     />
-                    <Text style={{marginBottom: 10}}>
-                      The idea with React Native Elements is more about component structure than actual design.
+                    <Text style={{margin: 5}}>
+                      {users.services.map((u,i) => {
+                        return(
+                          u.type && `(${u.name.toLocaleUpperCase()}) `
+                        )
+                      })}
                     </Text>
+                    <View style={{flex: 1}}>
                     <Button
-                      icon={<Icon name='code' color='#ffffff' />}
+                      icon={<Icon type='font-awesome' name='comments' color='#ffffff' />}
                       backgroundColor='#03A9F4'
                       buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
                       title='VIEW NOW' />
+                    </View>
                   </View>
             </Card>
             )
