@@ -15,21 +15,21 @@ class currentChat extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({
-      messages: [
-        {
-          _id: 1,
-          text: 'Hello developer',
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://placeimg.com/140/140/any',
-            id: 7656576576
-          },
-        },
-      ],
-    })
+    // this.setState({
+    //   messages: [
+    //     {
+    //       _id: 1,
+    //       text: 'Hello developer',
+    //       createdAt: new Date(),
+    //       user: {
+    //         _id: 2,
+    //         name: 'React Native',
+    //         avatar: 'https://placeimg.com/140/140/any',
+    //         id: 7656576576
+    //       },
+    //     },
+    //   ],
+    // })
   }
 
   onSend(messages = []) {
@@ -42,7 +42,7 @@ class currentChat extends React.Component {
   }
 
   render() {
-    const { chats } = this.props
+    const { chats, user } = this.props
     return (
       <View style={styles.container}>
       {chats ?
@@ -50,7 +50,7 @@ class currentChat extends React.Component {
       <Header
         placement="left"
         leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
-        centerComponent={{ text: `Wellcome`, style: { color: '#fff' } }}
+        centerComponent={{ text: `${chats.name}`, style: { color: '#fff' } }}
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
       <GiftedChat
@@ -71,7 +71,7 @@ class currentChat extends React.Component {
       <Header
         placement="left"
         leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
-        centerComponent={{ text: `chats.name`, style: { color: '#fff' } }}
+        centerComponent={{ text: `${user.name}`, style: { color: '#fff' } }}
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
         <Text style={{margin: 10}}>OOPS! no recent Chat Found</Text>
