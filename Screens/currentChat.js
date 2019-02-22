@@ -5,13 +5,38 @@ import { Header, Button, CheckBox } from 'react-native-elements';
 import { updateUser, removeUser } from '../Redux/actions/authActions'
 import { DrawerActions } from 'react-navigation-drawer';
 import { connect } from 'react-redux';
+import { GiftedChat } from 'react-native-gifted-chat'
 import axios from 'axios';
 
 class currentChat extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+        messages: []
     }
+  }
+
+  componentWillMount() {
+    this.setState({
+      messages: [
+        {
+          _id: 1,
+          text: 'Hello developer',
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: 'React Native',
+            avatar: 'https://placeimg.com/140/140/any',
+          },
+        },
+      ],
+    })
+  }
+
+  onSend(messages = []) {
+    this.setState(previousState => ({
+      messages: GiftedChat.append(previousState.messages, messages),
+    }))
   }
 
   render() {
@@ -25,6 +50,13 @@ class currentChat extends React.Component {
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
         <View style={styles.container}>
+        <GiftedChat
+                messages={this.state.messages}
+                onSend={messages => this.onSend(messages)}
+                user={{
+                _id: 1,
+                }}
+            />
         </View>
       </ScrollView>
     );
