@@ -101,7 +101,9 @@ class Home extends React.Component {
 
   chatStart(users){
     var { user } = this.props
+    !user.chat && [user.chat = {}]
     user.chat[`${users.id}`] = []
+    !users.chat && [users.chat = {}]
     users.chat[`${user.id}`] = []
     console.log('users',users)
     this.props.chatUser(users)
@@ -221,7 +223,7 @@ const styles = StyleSheet.create({
       updateUser: (user) => dispatch(updateUser(user)),
       allUser: (userList) => dispatch(allUser(userList)),
       removeUser: () => dispatch(removeUser()),
-      chatUser: (chat) => dispatch(chatUser(chat))
+      chatUser: (chats) => dispatch(chatUser(chats))
     }
   }
   

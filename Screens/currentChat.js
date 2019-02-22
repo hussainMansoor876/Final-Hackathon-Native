@@ -42,10 +42,10 @@ class currentChat extends React.Component {
   }
 
   render() {
-    const { chat } = this.props
+    const { chats } = this.props
     return (
       <View style={styles.container}>
-      {chat ?
+      {chats ?
       <View style={styles.container}>
       <Header
         placement="left"
@@ -71,7 +71,7 @@ class currentChat extends React.Component {
       <Header
         placement="left"
         leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
-        centerComponent={{ text: `${chat.name}`, style: { color: '#fff' } }}
+        centerComponent={{ text: `${chats.name}`, style: { color: '#fff' } }}
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
         <Text style={{margin: 10}}>OOPS! no recent Chat Found</Text>
@@ -102,7 +102,7 @@ const mapDispatchToProps = (dispatch) => {
     updateUser: (user) => dispatch(updateUser(user)),
     allUser: (userList) => dispatch(allUser(userList)),
     removeUser: () => dispatch(removeUser()),
-    chatUser: (chat) => dispatch(chatUser(chat))
+    chatUser: (chats) => dispatch(chatUser(chats))
   }
 }
 

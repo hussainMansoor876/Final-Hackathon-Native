@@ -25,10 +25,10 @@ const allUser = (userList) => {
     }
 }
 
-const chatUser = (chat) =>{
+const chatUser = (chats) =>{
     return {
         type: "CHAT_USER",
-        chat
+        chats
     }
 }
 

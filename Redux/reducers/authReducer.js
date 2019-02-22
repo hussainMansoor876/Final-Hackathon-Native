@@ -10,10 +10,10 @@ const reducer = (state = {}, action) =>{
             return {...state, userList: action.userList}
         }
         case "CHAT_USER": {
-            return {...state, chat: action.chat}
+            return {...state, chats: action.chats}
         }
         case "REMOVE_USER": {
-            return {...state, user: null, chat: null, userList: null}
+            return {...state, user: null, chats: null, userList: null}
         }
         default: {
             return state;
