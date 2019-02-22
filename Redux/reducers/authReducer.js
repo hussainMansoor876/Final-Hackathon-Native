@@ -9,6 +9,9 @@ const reducer = (state = {}, action) =>{
         case "ALL_USER": {
             return {...state, userList: action.userList}
         }
+        case "CHAT_USER": {
+            return {...state, chat: action.chat}
+        }
         case "REMOVE_USER": {
             return {...state, user: null}
         }

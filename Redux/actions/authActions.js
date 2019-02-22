@@ -25,9 +25,17 @@ const allUser = (userList) => {
     }
 }
 
+const chatUser = (chat) =>{
+    return {
+        type: "CHAT_USER",
+        chat
+    }
+}
+
 export {
     updateUser,
     newUser,
     removeUser,
-    allUser
+    allUser,
+    chatUser
 }

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Platform, Alert, ScrollView, Picker } from 'rea
 import { DrawerActions } from 'react-navigation-drawer';
 import { Header, Button, Input, Card, Image, Icon, Overlay, Rating, AirbnbRating } from 'react-native-elements';
 import { Constants, Location, Permissions } from 'expo';
-import { updateUser, removeUser, allUser } from '../Redux/actions/authActions'
+import { updateUser, removeUser, allUser, chatUser } from '../Redux/actions/authActions'
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -101,6 +101,8 @@ class Home extends React.Component {
 
   chatStart(users){
     console.log('users',users)
+    this.props.chatUser(users)
+    this.props.navigation.navigate('Chat')
   }
 
 
@@ -206,7 +208,8 @@ const styles = StyleSheet.create({
     console.log("mapToState",state.authReducer)
     return {
       user: state.authReducer.user,
-      userList: state.authReducer.userList
+      userList: state.authReducer.userList,
+      chat: state.authReducer.chat
     }
   }
   
@@ -214,7 +217,8 @@ const styles = StyleSheet.create({
     return {
       updateUser: (user) => dispatch(updateUser(user)),
       allUser: (userList) => dispatch(allUser(userList)),
-      removeUser: () => dispatch(removeUser())
+      removeUser: () => dispatch(removeUser()),
+      chatUser: (chat) => dispatch(chatUser(chat))
     }
   }
   
