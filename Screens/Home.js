@@ -100,6 +100,9 @@ class Home extends React.Component {
   }
 
   chatStart(users){
+    var { user } = this.props
+    user.chat[`${users.id}`] = []
+    users.chat[`${user.id}`] = []
     console.log('users',users)
     this.props.chatUser(users)
     this.props.navigation.navigate('Chat')

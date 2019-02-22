@@ -13,7 +13,7 @@ const reducer = (state = {}, action) =>{
             return {...state, chat: action.chat}
         }
         case "REMOVE_USER": {
-            return {...state, user: null}
+            return {...state, user: null, chat: null, userList: null}
         }
         default: {
             return state;
