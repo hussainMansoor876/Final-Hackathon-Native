@@ -71,7 +71,7 @@ class currentChat extends React.Component {
       <Header
         placement="left"
         leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
-        centerComponent={{ text: `${chats.name}`, style: { color: '#fff' } }}
+        centerComponent={{ text: `chats.name`, style: { color: '#fff' } }}
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
         <Text style={{margin: 10}}>OOPS! no recent Chat Found</Text>
@@ -93,7 +93,7 @@ const mapStateToProps = (state) => {
   return {
     user: state.authReducer.user,
     userList: state.authReducer.userList,
-    chat: state.authReducer.chat
+    chats: state.authReducer.chats
   }
 }
 
