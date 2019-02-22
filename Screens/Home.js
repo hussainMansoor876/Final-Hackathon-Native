@@ -99,6 +99,10 @@ class Home extends React.Component {
     })
   }
 
+  chatStart(users){
+    console.log('users',users)
+  }
+
 
   render() {
     const { user } = this.props
@@ -147,6 +151,7 @@ class Home extends React.Component {
                       icon={<Icon type='font-awesome' name='comments' color='#ffffff' />}
                       backgroundColor='#03A9F4'
                       buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green'}}
+                      onPress={() => this.chatStart(users)}
                       title='CHAT' />
                     </View>
                     <View style={{flex: 1, margin: 0.5}}>
@@ -161,7 +166,7 @@ class Home extends React.Component {
                     showRating={false}
                     ratingCount={5}
                     readonly
-                    startingValue={4.5}
+                    startingValue={4.3}
                     fractions={20}
                     onFinishRating={(u,i) => console.log(u)}
                     onStartRating={() => console.log("Bye")}
