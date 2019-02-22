@@ -33,12 +33,15 @@ class currentChat extends React.Component {
   }
 
   onSend(messages = []) {
+    const { chats, user } = this.props
     console.log(messages)
-    this.props.chat.messages = 'hello'
-    messages[0].user.avatar= 'https://placeimg.com/140/140/any'
-    this.setState(previousState => ({
-      messages: GiftedChat.append(previousState.messages, messages),
-    }))
+    console.log(this.props)
+    GiftedChat.append(user.chat[chats.id],messages)
+    user.chat[chats.id].push(messages[0])
+    // messages[0].user.avatar= 'https://placeimg.com/140/140/any'
+    // this.setState(previousState => ({
+    //   messages: GiftedChat.append(previousState.messages, messages),
+    // }))
   }
 
   render() {
@@ -54,17 +57,16 @@ class currentChat extends React.Component {
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
       <GiftedChat
-        messages={this.state.messages}
+        messages={user.chat[chats.id]}
         onSend={messages => this.onSend(messages)}
         scrollToBottom={true}
         placeholder='Type a message...'
         showUserAvatar={true}
         showAvatarForEveryMessage={true}
         bottomOffset={11}
-        renderSystemMessage={()=> console.log('hello')}
         forceGetKeyboardHeight={true}
         user={{
-          _id: 1,
+          _id: chats.id,
         }}
       />
       </View> : <View>

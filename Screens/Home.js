@@ -105,7 +105,6 @@ class Home extends React.Component {
     !user.chat[`${users.id}`] && [user.chat[`${users.id}`] = []]
     !users.chat && [users.chat = {}]
     !users.chat[`${user.id}`] && [users.chat[`${user.id}`] = []]
-    console.log('users',users)
     this.props.chatUser(users)
     this.props.navigation.navigate('Chat')
   }
