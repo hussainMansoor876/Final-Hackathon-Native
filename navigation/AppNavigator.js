@@ -47,6 +47,9 @@ const DrawerNavigator = createDrawerNavigator({
     },
     Inbox: {
         screen: Screen.InboxScreen
+    },
+    Chat: {
+        screen: Screen.currentChat
     }
 },{
     drawerWidth: 230,
