@@ -11,52 +11,10 @@ class currentChat extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      visible: true,
-      checked: true,
-      services: props.user.services,
-      checkBool: false
     }
   }
 
-  changeService(key,val){
-    let servicesCopy = this.state.services
-    console.log(servicesCopy[key])
-    servicesCopy[key].type = !servicesCopy[key].type
-    this.setState({services: servicesCopy, checkBool: true})
-  }
-
-  changeVisibility(){
-    const { visible } = this.state
-    this.setState({
-      visible: !visible
-    })
-  }
-
-  updateServices(){
-    const { services } = this.state
-    const { user } = this.props
-    axios.put(`https://final-hackathon.herokuapp.com/user/updateService/${user.id}`,{
-      services: services
-    })
-    .then((response) => {
-      Alert.alert(response.data.message)
-      this.setState({checkBool: false})
-      axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
-      .then((response) => {
-        this.props.updateUser(response.data[0])
-        this.props.navigation.navigate('Home')
-      })
-      .catch(function (error) {
-        console.log('error',error);
-      });
-    })
-    .catch(function (error) {
-      console.log('error',error);
-    });
-  }
-
   render() {
-    const { visible, services, checkBool } = this.state
     const { user } = this.props
     return (
         <ScrollView style={{flex: 1}}>
@@ -67,18 +25,6 @@ class currentChat extends React.Component {
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
         <View style={styles.container}>
-        {services.map((val,key)=>{
-          return <CheckBox
-          key={key}
-          title={val.name.toLocaleUpperCase()}
-          checked={val.type}
-          onPress={()=> this.changeService(key,val)}
-        />
-        })}
-        {checkBool && <Button
-            title="UPDATE SERVICES  "
-            onPress={() => this.updateServices()}
-          />}
         </View>
       </ScrollView>
     );
