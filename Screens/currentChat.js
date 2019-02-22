@@ -1,19 +1,12 @@
-import React from 'react';
-import { FloatingAction } from 'react-native-floating-action'
-import { StyleSheet, Text, View, Alert, ScrollView } from 'react-native';
-import { Header, Button, CheckBox } from 'react-native-elements';
-import { updateUser, removeUser } from '../Redux/actions/authActions'
-import { DrawerActions } from 'react-navigation-drawer';
-import { connect } from 'react-redux';
-import { GiftedChat } from 'react-native-gifted-chat'
-import axios from 'axios';
+import React from 'react'
+import { Platform, ScrollView, View, StyleSheet } from 'react-native';
+import { GiftedChat } from 'react-native-gifted-chat';
+import dismissKeyboard from 'react-native-dismiss-keyboard';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 class currentChat extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-        messages: []
-    }
+  state = {
+    messages: [],
   }
 
   componentWillMount() {
@@ -40,50 +33,31 @@ class currentChat extends React.Component {
   }
 
   render() {
-    const { user } = this.props
     return (
-        <ScrollView style={{flex: 1}}>
-        <Header
-        placement="left"
-        leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
-        centerComponent={{ text: `Wellcome ${user.name}`, style: { color: '#fff' } }}
-        rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
-        />
-        <View style={styles.container}>
-        <GiftedChat
-                messages={this.state.messages}
-                onSend={messages => this.onSend(messages)}
-                user={{
-                _id: 1,
-                }}
-            />
-        </View>
-      </ScrollView>
-    );
+      <GiftedChat
+        messages={this.state.messages}
+        onSend={messages => this.onSend(messages)}
+        scrollToBottom={true}
+        placeholder='Type a message...'
+        showUserAvatar={true}
+        showAvatarForEveryMessage={true}
+        bottomOffset={11}
+        renderSystemMessage={()=> console.log('hello')}
+        forceGetKeyboardHeight={true}
+        style={{flex: 1}}
+        user={{
+          _id: 1,
+        }}
+      />
+    )
   }
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-    },
-  });
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});
 
-
-const mapStateToProps = (state) => {
-  console.log("mapToState",state.authReducer)
-  return {
-    user: state.authReducer.user
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateUser: (user) => dispatch(updateUser(user)),
-    removeUser: () => dispatch(removeUser())
-  }
-}
-
-
-export default connect(mapStateToProps,mapDispatchToProps)(currentChat)
+export default currentChat
