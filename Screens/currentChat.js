@@ -10,8 +10,11 @@ import { connect } from 'react-redux';
 
 
 class currentChat extends React.Component {
-  state = {
-    messages: [],
+  constructor(props){
+    super(props)
+    this.state = {
+      messages: props.chats ? props.user.chat[props.chats.id] : [],
+    }
   }
 
   componentWillMount() {
@@ -34,14 +37,14 @@ class currentChat extends React.Component {
 
   onSend(messages = []) {
     const { chats, user } = this.props
-    console.log(messages)
-    console.log(this.props)
-    GiftedChat.append(user.chat[chats.id],messages)
-    user.chat[chats.id].push(messages[0])
-    // messages[0].user.avatar= 'https://placeimg.com/140/140/any'
-    // this.setState(previousState => ({
-    //   messages: GiftedChat.append(previousState.messages, messages),
-    // }))
+    messages[0].user.avatar= user.avator
+    messages[0].user.name = user.name
+    user.chat[chats.id] = GiftedChat.append(user.chat[chats.id],messages)
+    console.log('user',user.chat)
+    chats.chat[user.id] = GiftedChat.append(user.chat[chats.id],messages)
+    this.setState(previousState => ({
+      messages: GiftedChat.append(previousState.messages, messages),
+    }))
   }
 
   render() {
