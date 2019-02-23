@@ -40,8 +40,9 @@ class currentChat extends React.Component {
     messages[0].user.avatar= user.avator
     messages[0].user.name = user.name
     user.chat[chats.id] = GiftedChat.append(user.chat[chats.id],messages)
-    console.log('user',user.chat)
+    console.log('user',user)
     chats.chat[user.id] = GiftedChat.append(user.chat[chats.id],messages)
+    console.log('chats',chats)
     this.setState(previousState => ({
       messages: GiftedChat.append(previousState.messages, messages),
     }))
