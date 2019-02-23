@@ -48,12 +48,6 @@ class currentChat extends React.Component {
       id: user._id,
       chat: user.chat
     })
-      .then((response) => {
-        console.log('Rest',response)
-      })
-      .catch(function (error) {
-        console.log('error',error);
-      });
     this.setState(previousState => ({
       messages: GiftedChat.append(previousState.messages, messages),
     }))
