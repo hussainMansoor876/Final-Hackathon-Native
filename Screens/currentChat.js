@@ -1,5 +1,5 @@
 import React from 'react'
-import { Platform, ScrollView, View, StyleSheet } from 'react-native';
+import { Platform, ScrollView, View, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import dismissKeyboard from 'react-native-dismiss-keyboard';
 import { Header, Button, Input, Card, Image, Icon, Text } from 'react-native-elements';
@@ -20,16 +20,16 @@ class currentChat extends React.Component {
 
   componentWillMount() {
     const { user, chats } = this.props
-    setInterval(()=>{
-      axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
-        .then((response) => {
-          console.log('response',response.data[0].chat)
-          user.chat[chats.id] !== response.data[0].chat[chats.id] && console.log('Hello')
-        })
-        .catch(function (error) {
-          console.log('error',error);
-        });
-    },3000)
+    // setInterval(()=>{
+    //   axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
+    //     .then((response) => {
+    //       console.log('response',response.data[0].chat[chats.id])
+    //       console.log(user.chat[chats.id])
+    //     })
+    //     .catch(function (error) {
+    //       console.log('error',error);
+    //     });
+    // },3000)
     // this.setState({
     //   messages: [
     //     {
@@ -70,9 +70,10 @@ class currentChat extends React.Component {
 
   render() {
     const { chats, user } = this.props
+
     return (
       <View style={styles.container}>
-      {chats ?
+      {chats ? 
       <View style={styles.container}>
       <Header
         placement="left"
@@ -80,20 +81,24 @@ class currentChat extends React.Component {
         centerComponent={{ text: `${chats.name}`, style: { color: '#fff' } }}
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
+      <KeyboardAvoidingView behavior={'padding'} style={{flex:1}} keyboardVerticalOffset={25}>
       <GiftedChat
         messages={user.chat[chats.id]}
         onSend={messages => this.onSend(messages)}
-        scrollToBottom={true}
+        // scrollToBottom={true}
         placeholder='Type a message...'
         showUserAvatar={true}
         showAvatarForEveryMessage={true}
-        bottomOffset={11}
-        forceGetKeyboardHeight={true}
+        // bottomOffset={11}
+        // forceGetKeyboardHeight={true}
         user={{
           _id: chats.id,
         }}
+
       />
-      </View> : <View>
+      </KeyboardAvoidingView>
+      </View>
+       : <View>
       <Header
         placement="left"
         leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}

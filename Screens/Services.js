@@ -58,6 +58,7 @@ class Services extends React.Component {
   render() {
     const { visible, services, checkBool } = this.state
     const { user } = this.props
+    console.log('props')
     return (
         <ScrollView style={{flex: 1}}>
         <Header
