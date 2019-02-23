@@ -19,11 +19,12 @@ class currentChat extends React.Component {
   }
 
   componentWillMount() {
-    const { user } = this.props
+    const { user, chats } = this.props
     setInterval(()=>{
       axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
         .then((response) => {
           console.log('response',response.data[0].chat)
+          user.chat[chats.id] !== response.data[0].chat[chats.id] && console.log('Hello')
         })
         .catch(function (error) {
           console.log('error',error);
