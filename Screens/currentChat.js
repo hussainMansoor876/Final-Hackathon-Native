@@ -23,7 +23,7 @@ class currentChat extends React.Component {
     setInterval(()=>{
       axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
         .then((response) => {
-          console.log('response',response)
+          console.log('response',response.data[0].chat)
         })
         .catch(function (error) {
           console.log('error',error);
