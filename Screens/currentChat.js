@@ -7,6 +7,7 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { DrawerActions } from 'react-navigation-drawer';
 import { updateUser, removeUser, allUser, chatUser } from '../Redux/actions/authActions'
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 
 class currentChat extends React.Component {
@@ -43,6 +44,16 @@ class currentChat extends React.Component {
     console.log('user',user)
     chats.chat[user.id] = GiftedChat.append(user.chat[chats.id],messages)
     console.log('chats',chats)
+    axios.put(`https://final-hackathon.herokuapp.com/user/chat`,{
+      id: user._id,
+      chat: user.chat
+    })
+      .then((response) => {
+        console.log('Rest',response)
+      })
+      .catch(function (error) {
+        console.log('error',error);
+      });
     this.setState(previousState => ({
       messages: GiftedChat.append(previousState.messages, messages),
     }))
