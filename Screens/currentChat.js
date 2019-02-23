@@ -19,6 +19,16 @@ class currentChat extends React.Component {
   }
 
   componentWillMount() {
+    const { user } = this.props
+    setInterval(()=>{
+      axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
+        .then((response) => {
+          console.log('response',response)
+        })
+        .catch(function (error) {
+          console.log('error',error);
+        });
+    },3000)
     // this.setState({
     //   messages: [
     //     {
