@@ -35,8 +35,9 @@ class Services extends React.Component {
   updateServices(){
     const { services } = this.state
     const { user } = this.props
-    axios.put(`https://final-hackathon.herokuapp.com/user/updateService/${user.id}`,{
-      services: services
+    axios.put(`https://final-hackathon.herokuapp.com/user/updateService`,{
+      services: services,
+      id: user._id
     })
     .then((response) => {
       Alert.alert(response.data.message)
