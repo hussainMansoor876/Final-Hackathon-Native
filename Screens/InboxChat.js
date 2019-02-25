@@ -20,14 +20,14 @@ class InboxChat extends React.Component {
   render() {
     const { user, userList } = this.props
     return (
-        <View style={{flex: 1}}>
+        <View style={styles.container}>
         <Header
         placement="left"
         leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
         centerComponent={{ text: `Wellcome ${user.name}`, style: { color: '#fff' } }}
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
-        <ScrollView>
+        <ScrollView style={{flex: 1}}>
         {userList.map((l, i) => (
               <ListItem
                 key={i}
