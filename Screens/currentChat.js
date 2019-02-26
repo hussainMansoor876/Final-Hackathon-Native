@@ -61,7 +61,7 @@ class currentChat extends React.Component {
     })
     axios.put(`https://final-hackathon.herokuapp.com/user/chat`,{
       id: chats._id,
-      chat: chats.chat
+      chat: user.chat
     })
     this.setState(previousState => ({
       messages: GiftedChat.append(previousState.messages, messages),
