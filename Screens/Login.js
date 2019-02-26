@@ -145,8 +145,8 @@ class Login extends React.Component {
           axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
           .then((response) => {
             const { data } = response
-            if(!data.name){
-              this.props.newUser(true)
+            if(!data.length){
+              // this.props.newUser(true)
               this.props.updateUser(user)
             }
             else{
