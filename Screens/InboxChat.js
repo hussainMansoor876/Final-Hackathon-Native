@@ -19,10 +19,10 @@ class InboxChat extends React.Component {
 
   render() {
     const { user, userList } = this.props
-    console.log(user)
-    // user.chat.forEach((key,val)=>{
-    //   console.log(key)
-    // })
+    // console.log(user)
+    Object.entries(user['chat']).forEach(([key,value])=>{
+      console.log('key',key)
+  })
     return (
         <View style={styles.container}>
         <Header
