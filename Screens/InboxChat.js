@@ -15,6 +15,7 @@ class InboxChat extends React.Component {
     this.state = {
       inbox: []
     }
+    console.log(props)
   }
 
   componentWillMount(){
