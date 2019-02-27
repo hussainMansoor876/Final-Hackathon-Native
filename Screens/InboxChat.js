@@ -21,30 +21,38 @@ class InboxChat extends React.Component {
     const { user, userList } = this.props
     const { inbox } = this.state
     userList.map((l,i) => {
-      Object.entries(user['chat']).forEach(([key,value])=>{
+      user['chat'] && Object.entries(user['chat']).forEach(([key,value])=>{
         key == l.id && inbox.push(l)
     })
     })
+  }
+
+  chatStart(users){
+    this.props.chatUser(users)
+    this.props.navigation.navigate('Chat')
   }
 
 
   render() {
     const { user, userList } = this.props
     const { inbox } = this.state
-    // console.log(user)
-  //   Object.entries(user['chat']).forEach(([key,value])=>{
-  //     console.log('key',key)
-  // })
     return (
         <View style={styles.container}>
+        {!inbox.length ? <ScrollView style={{flex: 1}}>
         <Header
         placement="left"
         leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
         centerComponent={{ text: `Wellcome ${user.name}`, style: { color: '#fff' } }}
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
-        {!inbox ? <View style={{flex: 1}}>
-        </View> : 
+        <Text style={{margin: 10}}>Empty Inbox</Text>
+        </ScrollView> : <View style={{flex: 1}}>
+        <Header
+        placement="left"
+        leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
+        centerComponent={{ text: `Wellcome ${user.name}`, style: { color: '#fff' } }}
+        rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
+        />
         <ScrollView style={{flex: 1}}>
         {inbox.map((l, i) => {
           return  (
@@ -66,11 +74,13 @@ class InboxChat extends React.Component {
               subtitleStyle={{ color: 'white' }}
               subtitle={l.email ? l.email : null}
               containerStyle={{borderColor: 'white', borderWidth: 0.5, borderStyle: 'solid', marginLeft: 5, marginRight: 5, borderRadius: 5}}
+              onPress={() => this.chatStart(users)}
             />
           )
         })
           }
-        </ScrollView>}
+        </ScrollView>
+        </View>}
       </View>
     );
   }
