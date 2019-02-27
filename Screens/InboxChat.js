@@ -19,6 +19,10 @@ class InboxChat extends React.Component {
 
   render() {
     const { user, userList } = this.props
+    console.log(user)
+    // user.chat.forEach((key,val)=>{
+    //   console.log(key)
+    // })
     return (
         <View style={styles.container}>
         <Header
@@ -28,27 +32,29 @@ class InboxChat extends React.Component {
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
         <ScrollView style={{flex: 1}}>
-        {userList.map((l, i) => (
-              <ListItem
-                key={i}
-                Component={TouchableScale}
-                friction={90}
-                tension={100}
-                activeScale={0.95} //
-                linearGradientProps={{
-                  colors: ['azure', 'aqua'],
-                  start: [1, 0],
-                  end: [0.2, 0],
-                }}
-                badge={{ value: 1, textStyle: { color: 'white' }, containerStyle: { marginTop: -20 } }}
-                leftAvatar={{ rounded: true, source: { uri: l.avator } }}
-                title={l.name}
-                titleStyle={{ color: 'white', fontWeight: 'bold' }}
-                subtitleStyle={{ color: 'white' }}
-                subtitle={l.email ? l.email : null}
-                containerStyle={{borderColor: 'white', borderWidth: 0.5, borderStyle: 'solid', marginLeft: 5, marginRight: 5, borderRadius: 5}}
-              />
-            ))
+        {userList.map((l, i) => {
+          return  (
+            <ListItem
+              key={i}
+              Component={TouchableScale}
+              friction={90}
+              tension={100}
+              activeScale={0.95} //
+              linearGradientProps={{
+                colors: ['azure', 'aqua'],
+                start: [1, 0],
+                end: [0.2, 0],
+              }}
+              badge={{ value: 1, textStyle: { color: 'white' }, containerStyle: { marginTop: -20 } }}
+              leftAvatar={{ rounded: true, source: { uri: l.avator } }}
+              title={l.name}
+              titleStyle={{ color: 'white', fontWeight: 'bold' }}
+              subtitleStyle={{ color: 'white' }}
+              subtitle={l.email ? l.email : null}
+              containerStyle={{borderColor: 'white', borderWidth: 0.5, borderStyle: 'solid', marginLeft: 5, marginRight: 5, borderRadius: 5}}
+            />
+          )
+        })
           }
         </ScrollView>
       </View>

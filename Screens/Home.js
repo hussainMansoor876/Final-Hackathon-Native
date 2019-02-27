@@ -53,6 +53,7 @@ class Home extends React.Component {
     const { user } = this.props
     axios.get(`https://final-hackathon.herokuapp.com/user/get/${user.id}`)
     .then((response) => {
+      console.log('console',response)
       this.props.updateUser(response.data[0])
     })
     .catch(function (error) {
@@ -77,7 +78,7 @@ class Home extends React.Component {
         .then((response) => {
           console.log('Rest',response)
           this.setState({allUser: response.data})
-          this.props.allUser(response.data)      
+          this.props.allUser(response.data)     
         })
         .catch(function (error) {
           console.log('error',error);

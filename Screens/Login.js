@@ -146,7 +146,7 @@ class Login extends React.Component {
           .then((response) => {
             const { data } = response
             if(!data.length){
-              // this.props.newUser(true)
+              this.props.newUser(true)
               this.props.updateUser(user)
             }
             else{
