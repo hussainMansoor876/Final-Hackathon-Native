@@ -2,7 +2,7 @@ import React from 'react';
 import { FloatingAction } from 'react-native-floating-action'
 import { StyleSheet, Text, View, Alert, ScrollView } from 'react-native';
 import { Header, Button, CheckBox, ListItem } from 'react-native-elements';
-import { updateUser, removeUser, allUser } from '../Redux/actions/authActions'
+import { updateUser, removeUser, allUser, chatUser } from '../Redux/actions/authActions'
 import { DrawerActions } from 'react-navigation-drawer';
 import { connect } from 'react-redux';
 import TouchableScale from 'react-native-touchable-scale';
@@ -74,7 +74,7 @@ class InboxChat extends React.Component {
               subtitleStyle={{ color: 'white' }}
               subtitle={l.email ? l.email : null}
               containerStyle={{borderColor: 'white', borderWidth: 0.5, borderStyle: 'solid', marginLeft: 5, marginRight: 5, borderRadius: 5}}
-              onPress={() => this.chatStart(users)}
+              onPress={() => this.chatStart(l)}
             />
           )
         })
@@ -106,7 +106,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateUser: (user) => dispatch(updateUser(user)),
     allUser: (userList) => dispatch(allUser(userList)),
-    removeUser: () => dispatch(removeUser())
+    removeUser: () => dispatch(removeUser()),
+    chatUser: (chats) => dispatch(chatUser(chats))
   }
 }
 
