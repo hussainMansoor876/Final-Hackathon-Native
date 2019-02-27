@@ -98,7 +98,8 @@ const mapStateToProps = (state) => {
   console.log("mapToState",state.authReducer)
   return {
     user: state.authReducer.user,
-    userList: state.authReducer.userList
+    userList: state.authReducer,
+    chats: state.authReducer.chats
   }
 }
 
