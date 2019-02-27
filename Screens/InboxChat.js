@@ -13,16 +13,28 @@ class InboxChat extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      inbox: []
     }
+  }
+
+  componentWillMount(){
+    const { user, userList } = this.props
+    const { inbox } = this.state
+    userList.map((l,i) => {
+      Object.entries(user['chat']).forEach(([key,value])=>{
+        key == l.id && inbox.push(l)
+    })
+    })
   }
 
 
   render() {
     const { user, userList } = this.props
+    const { inbox } = this.state
     // console.log(user)
-    Object.entries(user['chat']).forEach(([key,value])=>{
-      console.log('key',key)
-  })
+  //   Object.entries(user['chat']).forEach(([key,value])=>{
+  //     console.log('key',key)
+  // })
     return (
         <View style={styles.container}>
         <Header
@@ -31,11 +43,10 @@ class InboxChat extends React.Component {
         centerComponent={{ text: `Wellcome ${user.name}`, style: { color: '#fff' } }}
         rightComponent={{style: { color: '#fff' }, icon: 'arrow-forward', color: '#fff', onPress: ()=> this.props.removeUser() }}
         />
+        {!inbox ? <View style={{flex: 1}}>
+        </View> : 
         <ScrollView style={{flex: 1}}>
-        {userList.map((l, i) => {
-          Object.entries(user['chat']).forEach(([key,value])=>{
-            key == l.id && console.log('key',key)
-        })
+        {inbox.map((l, i) => {
           return  (
             <ListItem
               key={i}
@@ -48,7 +59,7 @@ class InboxChat extends React.Component {
                 start: [1, 0],
                 end: [0.2, 0],
               }}
-              badge={{ value: 1, textStyle: { color: 'white' }, containerStyle: { marginTop: -20 } }}
+              // badge={{ value: 1, textStyle: { color: 'white' }, containerStyle: { marginTop: -20 } }}
               leftAvatar={{ rounded: true, source: { uri: l.avator } }}
               title={l.name}
               titleStyle={{ color: 'white', fontWeight: 'bold' }}
@@ -59,7 +70,7 @@ class InboxChat extends React.Component {
           )
         })
           }
-        </ScrollView>
+        </ScrollView>}
       </View>
     );
   }
