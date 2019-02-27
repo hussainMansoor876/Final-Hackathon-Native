@@ -33,6 +33,9 @@ class InboxChat extends React.Component {
         />
         <ScrollView style={{flex: 1}}>
         {userList.map((l, i) => {
+          Object.entries(user['chat']).forEach(([key,value])=>{
+            key == l.id && console.log('key',key)
+        })
           return  (
             <ListItem
               key={i}
