@@ -110,6 +110,10 @@ class Home extends React.Component {
     this.props.navigation.navigate('Chat')
   }
 
+  hirePerson(users){
+    console.log(users)
+  }
+
 
   render() {
     const { user } = this.props
@@ -166,7 +170,9 @@ class Home extends React.Component {
                       icon={<Icon type='font-awesome' name='plus' color='#ffffff' />}
                       backgroundColor='#03A9F4'
                       buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                      title='HIRE' />
+                      title='HIRE'
+                      onPress={() => this.hirePerson(users)}
+                       />
                       </View>
                     </View>
                     <Rating
