@@ -117,12 +117,20 @@ class Home extends React.Component {
       accept: false,
       denied: false
     }
+    axios.put(`https://final-hackathon.herokuapp.com/user/request`,{
+      id: user._id,
+      request: user.request
+    })
     !users.request && [users.request = {}]
     !users.request['received'] && [users.request['received'] = {}]
     users.request['received'][user.id] = {
       accept: false,
       denied: false
     }
+    axios.put(`https://final-hackathon.herokuapp.com/user/request`,{
+      id: users._id,
+      request: users.request
+    })
     console.log('user',user)
     console.log('users',users)    
   }
