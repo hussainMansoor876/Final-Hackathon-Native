@@ -117,7 +117,14 @@ class Home extends React.Component {
       accept: false,
       denied: false
     }
+    !users.request && [users.request = {}]
+    !users.request['received'] && [users.request['received'] = {}]
+    users.request['received'][user.id] = {
+      accept: false,
+      denied: false
+    }
     console.log('user',user)
+    console.log('users',users)    
   }
 
 
