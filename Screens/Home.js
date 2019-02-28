@@ -112,7 +112,11 @@ class Home extends React.Component {
   hirePerson(users){
     var { user } = this.props
     !user.request && [user.request = {}]
-    user.request['send'] = users.id
+    !user.request['send'] && [user.request['send'] = {}]
+    user.request['send'][users.id] = {
+      accept: false,
+      denied: false
+    }
     console.log('user',user)
   }
 
