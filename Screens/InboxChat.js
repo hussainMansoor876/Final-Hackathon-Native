@@ -99,7 +99,7 @@ const mapStateToProps = (state) => {
   console.log("mapToState",state.authReducer)
   return {
     user: state.authReducer.user,
-    userList: state.authReducer,
+    userList: state.authReducer.userList,
     chats: state.authReducer.chats
   }
 }
