@@ -2,7 +2,7 @@ import React from 'react';
 import { FloatingAction } from 'react-native-floating-action'
 import { StyleSheet, Text, View, Alert, ScrollView } from 'react-native';
 import { Header, Button, CheckBox, Icon, ListItem } from 'react-native-elements';
-import { updateUser, removeUser } from '../Redux/actions/authActions'
+import { updateUser, removeUser, allUser, chatUser } from '../Redux/actions/authActions'
 import { DrawerActions } from 'react-navigation-drawer';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -81,19 +81,23 @@ const styles = StyleSheet.create({
   });
 
 
-const mapStateToProps = (state) => {
-  console.log("mapToState",state.authReducer)
-  return {
-    user: state.authReducer.user
+  const mapStateToProps = (state) => {
+    console.log("mapToState",state.authReducer)
+    return {
+      user: state.authReducer.user,
+      userList: state.authReducer.userList,
+      chats: state.authReducer.chats
+    }
   }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateUser: (user) => dispatch(updateUser(user)),
-    removeUser: () => dispatch(removeUser())
+  
+  const mapDispatchToProps = (dispatch) => {
+    return {
+      updateUser: (user) => dispatch(updateUser(user)),
+      allUser: (userList) => dispatch(allUser(userList)),
+      removeUser: () => dispatch(removeUser()),
+      chatUser: (chats) => dispatch(chatUser(chats))
+    }
   }
-}
 
 
 export default connect(mapStateToProps,mapDispatchToProps)(Requests)
