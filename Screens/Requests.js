@@ -63,7 +63,16 @@ class Requests extends React.Component {
             backgroundColor='#03A9F4'
             buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green'}}
             title='RECEIVED' />
-            <View>
+        </View>
+        <View style={{flex: 1, margin: 0.5}}>
+        <Button
+            icon={<Icon type='font-awesome' name='plus' color='#ffffff' />}
+            backgroundColor='#03A9F4'
+            buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+            title='SEND' />
+            </View>
+        </View>
+        <View>
           {
             list.map((l, i) => (
               <ListItem
@@ -74,15 +83,6 @@ class Requests extends React.Component {
               />
             ))
           }
-        </View>
-        </View>
-        <View style={{flex: 1, margin: 0.5}}>
-        <Button
-            icon={<Icon type='font-awesome' name='plus' color='#ffffff' />}
-            backgroundColor='#03A9F4'
-            buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-            title='SEND' />
-            </View>
         </View>
         </View>
       </View>
