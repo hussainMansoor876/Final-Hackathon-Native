@@ -24,6 +24,7 @@ class Requests extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      received: {}
     }
   }
 
@@ -32,7 +33,13 @@ class Requests extends React.Component {
     // console.log('user',user)
     userList.map((v,i) => {
       user['request']['received'] && Object.entries(user['request']['received']).forEach(([key,value])=>{
-        console.log('key',key)
+        // key == v.id && this.setState({
+        //   received: {
+        //     ...this.state.received,
+
+        //   }
+        // })
+        console.log('value',value)
     })
     })
   }
