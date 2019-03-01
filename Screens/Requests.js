@@ -25,6 +25,7 @@ class Requests extends React.Component {
     super(props);
     this.state = {
     }
+    console.log(props)
   }
 
   render() {
