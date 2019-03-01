@@ -102,7 +102,7 @@ class Requests extends React.Component {
               </View>
             ))
           }
-        </View> : <View>
+        </View> : <View style={{flex: 1, borderColor: 'black', borderWidth: 1, borderStyle: 'solid'}}>
           {
             send.map((l, i) => (
               <View key={i} style={{flex: 1}}>
