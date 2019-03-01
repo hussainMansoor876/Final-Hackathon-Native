@@ -48,7 +48,7 @@ class Requests extends React.Component {
     const { user } = this.props
     console.log('rec',this.state)
     return (
-        <View style={{flex: 1}}>
+        <ScrollView style={{flex: 1}}>
         <Header
         placement="left"
         leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=> this.props.navigation.dispatch(DrawerActions.toggleDrawer()) }}
@@ -75,17 +75,34 @@ class Requests extends React.Component {
         <View>
           {
             list.map((l, i) => (
+              <View key={i} style={{flex: 1}}>
               <ListItem
-                key={i}
                 leftAvatar={{ source: { uri: l.avatar_url } }}
                 title={l.name}
                 subtitle={l.subtitle}
               />
+              <View style={{flex: 1, flexDirection: 'row'}}>
+                <View style={{flex: 1, margin: 0.5}}>
+                <Button
+                    icon={<Icon type='font-awesome' name='check' color='#ffffff' />}
+                    backgroundColor='#03A9F4'
+                    buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green'}}
+                    title='ACCEPT' />
+                </View>
+                <View style={{flex: 1, margin: 0.5}}>
+                <Button
+                    icon={<Icon type='font-awesome' name='times' color='#ffffff' />}
+                    backgroundColor='#03A9F4'
+                    buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                    title='CANCEL' />
+                    </View>
+                </View>
+              </View>
             ))
           }
         </View>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
