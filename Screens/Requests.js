@@ -24,22 +24,21 @@ class Requests extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      received: {}
+      received: [],
+      send: []
     }
   }
 
   componentWillMount(){
     const { user, userList } = this.props
+    const { received, send } = this.state
     // console.log('user',user)
     userList.map((v,i) => {
       user['request']['received'] && Object.entries(user['request']['received']).forEach(([key,value])=>{
-        // key == v.id && this.setState({
-        //   received: {
-        //     ...this.state.received,
-
-        //   }
-        // })
-        console.log('value',value)
+        key == v.id && received.push(v)
+    })
+      user['request']['send'] && Object.entries(user['request']['send']).forEach(([key,value])=>{
+        key == v.id && send.push(v)
     })
     })
   }
@@ -47,6 +46,7 @@ class Requests extends React.Component {
   render() {
     const { visible, services, checkBool } = this.state
     const { user } = this.props
+    console.log('rec',this.state)
     return (
         <View style={{flex: 1}}>
         <Header
