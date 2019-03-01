@@ -25,7 +25,16 @@ class Requests extends React.Component {
     super(props);
     this.state = {
     }
-    console.log(props)
+  }
+
+  componentWillMount(){
+    const { user, userList } = this.props
+    // console.log('user',user)
+    userList.map((v,i) => {
+      user['request']['received'] && Object.entries(user['request']['received']).forEach(([key,value])=>{
+        console.log('key',key)
+    })
+    })
   }
 
   render() {
