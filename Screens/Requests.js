@@ -1,11 +1,24 @@
 import React from 'react';
 import { FloatingAction } from 'react-native-floating-action'
 import { StyleSheet, Text, View, Alert, ScrollView } from 'react-native';
-import { Header, Button, CheckBox, Icon } from 'react-native-elements';
+import { Header, Button, CheckBox, Icon, ListItem } from 'react-native-elements';
 import { updateUser, removeUser } from '../Redux/actions/authActions'
 import { DrawerActions } from 'react-navigation-drawer';
 import { connect } from 'react-redux';
 import axios from 'axios';
+
+const list = [
+  {
+    name: 'Amy Farha',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+    subtitle: 'Vice President'
+  },
+  {
+    name: 'Chris Jackson',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+    subtitle: 'Vice Chairman'
+  }
+]
 
 class Requests extends React.Component {
   constructor(props){
@@ -33,6 +46,18 @@ class Requests extends React.Component {
             backgroundColor='#03A9F4'
             buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green'}}
             title='RECEIVED' />
+            <View>
+          {
+            list.map((l, i) => (
+              <ListItem
+                key={i}
+                leftAvatar={{ source: { uri: l.avatar_url } }}
+                title={l.name}
+                subtitle={l.subtitle}
+              />
+            ))
+          }
+        </View>
         </View>
         <View style={{flex: 1, margin: 0.5}}>
         <Button
