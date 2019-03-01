@@ -74,7 +74,7 @@ class Requests extends React.Component {
             title='SEND' />
             </View>
         </View>
-        {type == 'rec' ? <View style={{flex: 1, borderColor: 'black', borderWidth: 1, borderStyle: 'solid'}}>
+        {type == 'rec' ? received.length ? <View style={{flex: 1}}>
           {
             received.map((l, i) => (
               <View key={i} style={{flex: 1}}>
@@ -102,7 +102,9 @@ class Requests extends React.Component {
               </View>
             ))
           }
-        </View> : <View style={{flex: 1, borderColor: 'black', borderWidth: 1, borderStyle: 'solid'}}>
+        </View> : <View>
+          <Text>No Received Request yet...!!</Text>
+        </View> :  send.length ? <View style={{flex: 1}}>
           {
             send.map((l, i) => (
               <View key={i} style={{flex: 1}}>
@@ -123,6 +125,8 @@ class Requests extends React.Component {
               </View>
             ))
           }
+        </View> : <View>
+          <Text>No Send Request yet...!!</Text>
         </View>}
         </View>
       </ScrollView>
