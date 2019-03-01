@@ -25,7 +25,8 @@ class Requests extends React.Component {
     super(props);
     this.state = {
       received: [],
-      send: []
+      send: [],
+      type: 'rec'
     }
   }
 
@@ -44,9 +45,8 @@ class Requests extends React.Component {
   }
 
   render() {
-    const { visible, services, checkBool } = this.state
+    const { type, send, received } = this.state
     const { user } = this.props
-    console.log('rec',this.state)
     return (
         <ScrollView style={{flex: 1}}>
         <Header
@@ -62,6 +62,7 @@ class Requests extends React.Component {
             icon={<Icon type='font-awesome' name='comments' color='#ffffff' />}
             backgroundColor='#03A9F4'
             buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'green'}}
+            onPress={() => this.setState({type: 'rec'})}
             title='RECEIVED' />
         </View>
         <View style={{flex: 1, margin: 0.5}}>
@@ -69,17 +70,18 @@ class Requests extends React.Component {
             icon={<Icon type='font-awesome' name='plus' color='#ffffff' />}
             backgroundColor='#03A9F4'
             buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+            onPress={() => this.setState({type: 'send'})}
             title='SEND' />
             </View>
         </View>
-        <View>
+        {type == 'rec' ? <View style={{flex: 1, borderColor: 'black', borderWidth: 1, borderStyle: 'solid'}}>
           {
-            list.map((l, i) => (
+            received.map((l, i) => (
               <View key={i} style={{flex: 1}}>
               <ListItem
-                leftAvatar={{ source: { uri: l.avatar_url } }}
+                leftAvatar={{ source: { uri: l.avator } }}
                 title={l.name}
-                subtitle={l.subtitle}
+                subtitle={l.email}
               />
               <View style={{flex: 1, flexDirection: 'row'}}>
                 <View style={{flex: 1, margin: 0.5}}>
@@ -100,7 +102,28 @@ class Requests extends React.Component {
               </View>
             ))
           }
-        </View>
+        </View> : <View>
+          {
+            send.map((l, i) => (
+              <View key={i} style={{flex: 1}}>
+              <ListItem
+                leftAvatar={{ source: { uri: l.avator } }}
+                title={l.name}
+                subtitle={l.subtitle}
+              />
+              <View style={{flex: 1, flexDirection: 'row'}}>
+                <View style={{flex: 1, margin: 0.5}}>
+                <Button
+                    icon={<Icon type='font-awesome' name='times' color='#ffffff' />}
+                    backgroundColor='#03A9F4'
+                    buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0, backgroundColor: 'red'}}
+                    title='CANCEL Request' />
+                    </View>
+                </View>
+              </View>
+            ))
+          }
+        </View>}
         </View>
       </ScrollView>
     );
@@ -110,7 +133,7 @@ class Requests extends React.Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: '#fff'
     },
   });
 
