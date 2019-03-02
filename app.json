@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Native-Hackathon",
-    "slug": "Native-Hackathon",
+    "name": "Fast-Service",
+    "slug": "Fast-Service",
     "privacy": "public",
     "sdkVersion": "31.0.0",
     "platforms": [
@@ -10,9 +10,9 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./service.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./service.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -23,7 +23,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.Fast-Service.Fast-Service"
+    },
+    "android": {
+      "package": "com.Fast-Service.Fast-Service"
     }
   }
 }
