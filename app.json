@@ -12,7 +12,7 @@
     "orientation": "portrait",
     "icon": "./service.png",
     "splash": {
-      "image": "./service.png",
+      "image": "./fast-service.jpg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
